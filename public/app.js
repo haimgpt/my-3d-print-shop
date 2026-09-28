@@ -36,7 +36,6 @@ function normalizeCart(raw) {
 document.title = SITE_SETTINGS.pageTitle;
 $("#brand-name").textContent = SITE_SETTINGS.businessName;
 $("#footer-brand").textContent = SITE_SETTINGS.businessName;
-$("#hero-title").textContent = SITE_SETTINGS.heroTitle;
 $("#hero-text").textContent = SITE_SETTINGS.heroText;
 
 function waLink(message) {
@@ -89,7 +88,7 @@ function renderProducts() {
         <span class="category">${p.category}</span>
         <h3>${p.name}</h3>
         <p>${p.description}</p>
-        <div class="product-bottom"><strong>${p.price}</strong></div>
+        <div class="product-bottom"><strong>${formatPrice(p.priceValue)}</strong></div>
       </div>`;
     card.addEventListener("click", () => openProductModal(p.id));
     card.addEventListener("keydown", e => {
@@ -103,7 +102,11 @@ function renderProducts() {
 }
 
 function clampQty(value) {
-  return Math.min(99, Math.max(1, Number(value) || 1));
+  return Math.min(9, Math.max(1, Number(value) || 1));
+}
+
+function formatPrice(value) {
+  return Number.isFinite(value) ? "₪" + value : "מחיר לא הוגדר";
 }
 
 function openProductModal(id) {
@@ -113,7 +116,9 @@ function openProductModal(id) {
   productModalTitle.textContent = p.name;
   productModalCategory.textContent = p.category;
   productModalDescription.textContent = p.description;
-  productModalPrice.textContent = p.price;
+  productModalPrice.textContent = formatPrice(p.priceValue);
+  productModalAdd.disabled = !Number.isFinite(p.priceValue);
+  productModalAdd.textContent = Number.isFinite(p.priceValue) ? "הוספה לסל" : "יש לעדכן מחיר";
   productQty.value = 1;
   productModalMedia.innerHTML = p.image
     ? `<img src="${p.image}" alt="${p.name}">`
@@ -151,9 +156,11 @@ productModalAdd.addEventListener("click", () => {
 });
 
 function addToCart(id, qty = 1) {
+  const product = PRODUCTS.find(p => p.id === id);
+  if (!product || !Number.isFinite(product.priceValue)) return;
   const existing = cart.find(item => item.id === id);
-  if (existing) existing.qty += qty;
-  else cart.push({id, qty});
+  if (existing) existing.qty = Math.min(9, existing.qty + qty);
+  else cart.push({id, qty: Math.min(9, qty)});
   saveCart();
   openCart();
 }
@@ -176,9 +183,12 @@ function renderCart() {
     .filter(item => item.product);
 
   const totalUnits = items.reduce((sum, item) => sum + item.qty, 0);
+  const totalCost = items.reduce((sum, item) => sum + ((Number(item.product.priceValue) || 0) * item.qty), 0);
   $("#cart-count").textContent = totalUnits;
   $("#mobile-cart-count").textContent = totalUnits;
   cartItems.innerHTML = "";
+  $("#cart-total").textContent = "₪" + totalCost;
+  $("#cart-total-wrap").hidden = items.length === 0;
 
   if (!items.length) {
     cartItems.innerHTML = `<p class="cart-empty">הסל עדיין ריק. בחרו מוצרים שמעניינים אתכם.</p>`;
@@ -191,7 +201,7 @@ function renderCart() {
     item.innerHTML = `
       <div class="cart-item-info">
         <strong>${p.name}</strong>
-        <span>${p.price}</span>
+        <span>${formatPrice(p.priceValue)}</span>
         <div class="cart-qty">
           <button data-dec="${p.id}" aria-label="הפחת כמות">−</button>
           <span aria-label="כמות">${qty}</span>
@@ -212,7 +222,7 @@ function renderCart() {
   document.querySelectorAll("[data-inc]").forEach(btn => btn.addEventListener("click", () => {
     const item = cart.find(x => x.id === btn.dataset.inc);
     if (!item) return;
-    item.qty = clampQty(item.qty + 1);
+    item.qty = Math.min(9, item.qty + 1);
     saveCart();
   }));
   document.querySelectorAll("[data-remove]").forEach(btn => btn.addEventListener("click", () => {
