@@ -259,8 +259,17 @@ function closeCart() {
 }
 
 $("#cart-open").addEventListener("click", openCart);
-$("#mobile-cart").addEventListener("click", openCart);
+$("#mobile-cart").addEventListener("click", () => {
+  if (productModal.classList.contains("open")) closeProductModal();
+  openCart();
+});
 $("#cart-close").addEventListener("click", closeCart);
+document.querySelectorAll(".mobile-nav a").forEach(link => {
+  link.addEventListener("click", () => {
+    if (productModal.classList.contains("open")) closeProductModal();
+    if (cartDrawer.classList.contains("open")) closeCart();
+  });
+});
 cartDrawer.addEventListener("click", e => { if (e.target === cartDrawer) closeCart(); });
 $("#clear-cart").addEventListener("click", () => { cart = []; saveCart(); });
 $("#search-focus").addEventListener("click", () => {
