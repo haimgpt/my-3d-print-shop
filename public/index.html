@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>3D Print Studio | הדפסות תלת־ממד</title>
-  <meta name="description" content="הדפסות תלת־ממד בהתאמה אישית. מוצרים, דגמים ומתנות לפי הזמנה." />
+  <meta name="description" content="מוצרי תלת־ממד מוכנים לבחירה והזמנה." />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#fffaf0" />
   <link rel="stylesheet" href="style.css" />
@@ -23,7 +23,6 @@
   </header>
 
   <main id="top">
-
     <section class="catalog-wrap">
       <div class="container">
         <div class="catalog-toolbar">
@@ -56,6 +55,18 @@
         <span id="product-modal-category" class="category"></span>
         <h2 id="product-modal-title"></h2>
         <p id="product-modal-description"></p>
+
+        <div class="product-option" id="product-color-wrap">
+          <span class="quantity-label">בחרו צבע</span>
+          <div id="product-colors" class="color-options" aria-label="בחירת צבע"></div>
+        </div>
+
+        <div class="product-option engraving-wrap" id="product-engraving-wrap" hidden>
+          <label class="quantity-label" for="product-engraving">טקסט לחריטה</label>
+          <input id="product-engraving" class="engraving-input" type="text" maxlength="40" placeholder="כתבו כאן את החריטה הרצויה" />
+          <small>עד 40 תווים</small>
+        </div>
+
         <div class="product-quantity-wrap">
           <span class="quantity-label">כמות</span>
           <div class="quantity-control" aria-label="בחירת כמות">
@@ -64,6 +75,7 @@
             <button type="button" id="product-qty-plus" aria-label="הגדל כמות">+</button>
           </div>
         </div>
+
         <div class="product-modal-bottom">
           <strong id="product-modal-price"></strong>
           <button class="btn primary" id="product-modal-add">הוספה לסל</button>
@@ -84,15 +96,55 @@
           <span>סה״כ עלות המוצרים</span>
           <strong id="cart-total">₪0</strong>
         </div>
-        <button class="btn primary full" id="send-order">שליחת הבחירה ב־WhatsApp</button>
+        <button class="btn primary full" id="send-order">שליחת ההזמנה ב־WhatsApp</button>
         <button class="btn ghost full" id="clear-cart">ניקוי הסל</button>
       </div>
     </div>
   </aside>
 
+  <div class="utility-modal" id="ai-modal" aria-hidden="true">
+    <div class="utility-card ai-card" role="dialog" aria-modal="true" aria-labelledby="ai-title">
+      <div class="utility-head">
+        <div>
+          <span class="eyebrow">עוזר חכם</span>
+          <h2 id="ai-title">שאלו את ה־AI על המוצרים</h2>
+        </div>
+        <button class="icon-btn" id="ai-close" aria-label="סגור AI">✕</button>
+      </div>
+      <div class="ai-chat" id="ai-chat" aria-live="polite">
+        <div class="ai-message assistant">שלום! אפשר לשאול אותי על מחירים, צבעים, חריטה והמוצרים שבקטלוג.</div>
+      </div>
+      <form class="ai-form" id="ai-form">
+        <input id="ai-question" type="text" maxlength="500" placeholder="למשל: איזה מוצר מתאים למתנה עם חריטה?" autocomplete="off" />
+        <button class="btn primary" type="submit" id="ai-send">שליחה</button>
+      </form>
+      <small class="utility-note">העוזר עונה לפי המידע שמופיע בקטלוג.</small>
+    </div>
+  </div>
+
+  <div class="utility-modal" id="tracking-modal" aria-hidden="true">
+    <div class="utility-card" role="dialog" aria-modal="true" aria-labelledby="tracking-title">
+      <div class="utility-head">
+        <div>
+          <span class="eyebrow">מעקב הזמנה</span>
+          <h2 id="tracking-title">עקבו אחרי ההזמנה שלכם</h2>
+        </div>
+        <button class="icon-btn" id="tracking-close" aria-label="סגור מעקב הזמנה">✕</button>
+      </div>
+      <p class="tracking-intro">הזינו את מספר ההזמנה שקיבלתם בעת השליחה.</p>
+      <div class="tracking-form">
+        <input id="tracking-id" type="text" placeholder="לדוגמה: 3D-260928-1234" autocomplete="off" />
+        <button class="btn primary" id="tracking-check" type="button">בדיקת סטטוס</button>
+      </div>
+      <div id="tracking-result" class="tracking-result" aria-live="polite"></div>
+    </div>
+  </div>
+
   <nav class="mobile-nav" aria-label="ניווט מהיר">
     <a class="mobile-nav-btn" href="#top"><span class="mobile-nav-icon">⌂</span><span>בית</span></a>
     <a class="mobile-nav-btn" href="#products"><span class="mobile-nav-icon">▦</span><span>מוצרים</span></a>
+    <button class="mobile-nav-btn" id="ai-open"><span class="mobile-nav-icon">✦</span><span>שאל AI</span></button>
+    <button class="mobile-nav-btn" id="track-open"><span class="mobile-nav-icon">⌖</span><span>מעקב</span></button>
     <button class="mobile-nav-btn" id="mobile-cart"><span class="mobile-nav-icon">🛒</span><span>סל <b id="mobile-cart-count">0</b></span></button>
   </nav>
 
