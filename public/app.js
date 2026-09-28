@@ -413,7 +413,12 @@ $("#search-focus").addEventListener("click", () => {
 });
 search.addEventListener("input", renderProducts);
 
-$("#send-order").addEventListener("click", openCheckout);
+const checkoutStartButton = $("#send-order");
+checkoutStartButton?.addEventListener("click", e => {
+  e.preventDefault();
+  e.stopPropagation();
+  openCheckout();
+});
 
 $("#whatsapp-order").addEventListener("click", () => {
   const items = cartSnapshot();
@@ -463,7 +468,6 @@ if (savedCustomer) {
   if (radio) radio.checked = true;
 }
 
-document.querySelectorAll(".mobile-nav a")
 document.querySelectorAll(".mobile-nav a").forEach(link => {
   link.addEventListener("click", () => {
     if (productModal.classList.contains("open")) closeProductModal();
