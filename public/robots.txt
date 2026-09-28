@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR-WORKER.workers.dev/sitemap.xml
+Sitemap: https://my-3d-print-shop.haimgpt.workers.dev/sitemap.xml
