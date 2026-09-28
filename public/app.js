@@ -36,12 +36,10 @@ function normalizeCart(raw) {
 document.title = SITE_SETTINGS.pageTitle;
 $("#brand-name").textContent = SITE_SETTINGS.businessName;
 $("#footer-brand").textContent = SITE_SETTINGS.businessName;
-$("#hero-text").textContent = SITE_SETTINGS.heroText;
 
 function waLink(message) {
   return `https://wa.me/${SITE_SETTINGS.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
-$("#whatsapp-hero").href = waLink("שלום, הגעתי מהאתר ורציתי לשאול על אחד המוצרים.");
 $("#year").textContent = new Date().getFullYear();
 
 const categories = ["הכל", ...new Set(PRODUCTS.map(p => p.category))];
