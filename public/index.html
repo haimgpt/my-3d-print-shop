@@ -45,6 +45,42 @@
         <div id="empty-state" class="empty" hidden>לא מצאנו מוצר מתאים. נסו חיפוש אחר.</div>
       </div>
     </section>
+
+    <section class="faq-section" id="faq">
+      <div class="container faq-container">
+        <div class="faq-head">
+          <span class="eyebrow">מידע שימושי</span>
+          <h2>שאלות ותשובות</h2>
+          <p>תשובות מהירות לשאלות נפוצות לפני ההזמנה.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>אילו צבעים אפשר לבחור?</summary>
+            <p>בכל מוצר שמציע בחירת צבע, הצבעים הזמינים מופיעים בחלון המוצר לפני ההוספה לסל.</p>
+          </details>
+          <details class="faq-item">
+            <summary>באילו מוצרים אפשר להוסיף חריטה?</summary>
+            <p>אפשרות החריטה מופיעה רק במוצרים שתומכים בה. אם מופיע שדה “טקסט לחריטה”, אפשר להזין בו את הטקסט הרצוי.</p>
+          </details>
+          <details class="faq-item">
+            <summary>איך מבצעים הזמנה?</summary>
+            <p>בוחרים מוצר, צבע וכמות, מוסיפים לסל ולבסוף לוחצים על “שליחת ההזמנה ב־WhatsApp”.</p>
+          </details>
+          <details class="faq-item">
+            <summary>איך עוקבים אחרי הזמנה?</summary>
+            <p>לאחר שליחת ההזמנה מתקבל מספר הזמנה. לחצו על “מעקב” בסרגל התחתון והזינו את המספר כדי לראות את הסטטוס הזמין.</p>
+          </details>
+          <details class="faq-item">
+            <summary>איך אפשר לשאול שאלה על מוצר?</summary>
+            <p>לחצו על הכפתור “שאל AI” בסרגל התחתון. חלון העוזר החכם ייפתח רק לאחר הלחיצה.</p>
+          </details>
+          <details class="faq-item">
+            <summary>איך יוצרים קשר לגבי ההזמנה?</summary>
+            <p>את ההזמנה והמשך התקשורת אפשר לבצע דרך WhatsApp לאחר בחירת המוצרים בסל.</p>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
 
   <div class="product-modal" id="product-modal" aria-hidden="true">
@@ -102,7 +138,7 @@
     </div>
   </aside>
 
-  <div class="utility-modal" id="ai-modal" aria-hidden="true">
+  <div class="utility-modal" id="ai-modal" aria-hidden="true" hidden>
     <div class="utility-card ai-card" role="dialog" aria-modal="true" aria-labelledby="ai-title">
       <div class="utility-head">
         <div>
@@ -122,7 +158,7 @@
     </div>
   </div>
 
-  <div class="utility-modal" id="tracking-modal" aria-hidden="true">
+  <div class="utility-modal tracking-modal" id="tracking-modal" aria-hidden="true" hidden>
     <div class="utility-card" role="dialog" aria-modal="true" aria-labelledby="tracking-title">
       <div class="utility-head">
         <div>
