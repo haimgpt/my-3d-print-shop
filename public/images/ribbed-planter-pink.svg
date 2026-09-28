@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-label="עציץ מעוצב בצבע ורוד">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffdf9"/><stop offset="1" stop-color="#eee7de"/></linearGradient>
+  <linearGradient id="pot" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5b5c2"/><stop offset="1" stop-color="#c87387"/></linearGradient>
+  <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#557d35"/><stop offset="1" stop-color="#173f21"/></linearGradient>
+  <filter id="s"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-opacity=".18"/></filter>
+</defs>
+<rect width="900" height="900" fill="url(#bg)"/>
+<ellipse cx="450" cy="770" rx="250" ry="55" fill="#000" opacity=".08"/>
+<g filter="url(#s)">
+  <g stroke="#254b25" stroke-width="12" stroke-linecap="round">
+    <path d="M445 390C420 310 380 220 330 150"/>
+    <path d="M455 390C480 300 530 205 600 120"/>
+    <path d="M430 405C360 330 300 300 225 290"/>
+    <path d="M470 405C540 345 625 315 710 330"/>
+    <path d="M445 405C400 350 365 315 350 260"/>
+    <path d="M455 405C495 350 535 320 560 260"/>
+  </g>
+  <g fill="url(#leaf)" stroke="#315a2a" stroke-width="5">
+    <path d="M330 155c-120-75-190 55-105 135 72 66 150 10 105-135z"/>
+    <path d="M600 120c130-55 185 86 85 145-80 47-145-18-85-145z"/>
+    <path d="M226 290c-115-22-150 110-45 145 82 27 130-44 45-145z"/>
+    <path d="M708 330c115-15 145 120 35 147-85 21-124-51-35-147z"/>
+    <path d="M350 260c-95-20-118 95-33 125 69 24 105-36 33-125z"/>
+    <path d="M560 260c98-10 112 108 20 126-70 13-99-50-20-126z"/>
+    <path d="M455 245c-90-58-160 45-92 110 58 54 125 4 92-110z"/>
+  </g>
+  <path d="M240 400h420l-34 340H274z" fill="url(#pot)" stroke="#c87387" stroke-width="10"/>
+  <rect x="264" y="400" width="372" height="64" rx="28" fill="#f5b5c2" stroke="#c87387" stroke-width="9"/>
+  <g stroke="#c87387" stroke-width="9" opacity=".38">
+    <path d="M292 455l-10 220"/><path d="M310 455l-9.4 220"/><path d="M328 455l-8.8 220"/><path d="M346 455l-8.2 220"/><path d="M364 455l-7.6 220"/><path d="M382 455l-7 220"/><path d="M400 455l-6.4 220"/><path d="M418 455l-5.8 220"/><path d="M436 455l-5.2 220"/><path d="M454 455l-4.6000000000000005 220"/><path d="M472 455l-4 220"/><path d="M490 455l-3.4000000000000004 220"/><path d="M508 455l-2.8000000000000007 220"/><path d="M526 455l-2.2 220"/><path d="M544 455l-1.5999999999999996 220"/><path d="M562 455l-1 220"/><path d="M580 455l-0.40000000000000036 220"/><path d="M598 455l0.1999999999999993 220"/>
+  </g>
+  <path d="M274 680h352l-10 72H284z" fill="#895038"/>
+</g>
+</svg>
