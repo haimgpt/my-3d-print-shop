@@ -810,3 +810,73 @@ body{padding-bottom:104px}
   .ai-form .btn,.tracking-form .btn{width:100%}
   .product-modal-content{padding-bottom:34px}
 }
+
+
+/* ===== FAQ + stricter AI access + tracking alignment ===== */
+.utility-modal[hidden]{display:none!important}
+
+.faq-section{
+  padding:72px 0 128px;
+  background:linear-gradient(180deg,rgba(255,253,249,.2),#f4ecdf);
+  border-top:1px solid rgba(183,138,73,.18)
+}
+.faq-container{width:min(900px,92%)}
+.faq-head{margin-bottom:24px}
+.faq-head h2{
+  margin:4px 0 8px;
+  font-size:clamp(2rem,4vw,3rem);
+  color:#241e18
+}
+.faq-head p{margin:0;color:#766b60}
+.faq-list{display:grid;gap:10px}
+.faq-item{
+  background:#fffdf9;
+  border:1px solid #ddcdb6;
+  border-radius:17px;
+  box-shadow:0 8px 24px rgba(74,51,26,.05);
+  overflow:hidden
+}
+.faq-item summary{
+  position:relative;
+  cursor:pointer;
+  list-style:none;
+  padding:17px 52px 17px 18px;
+  font-weight:800;
+  color:#34291f
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::before{
+  content:"+";
+  position:absolute;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  width:26px;height:26px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:#f0e3d0;
+  color:#704f26;
+  font-size:1.2rem
+}
+.faq-item[open] summary::before{content:"−"}
+.faq-item p{
+  margin:0;
+  padding:0 18px 18px;
+  color:#716559;
+  line-height:1.75
+}
+
+/* Shift the entire order-tracking card slightly to the left. */
+#tracking-modal .utility-card{transform:translateX(-24px)}
+
+@media(max-width:560px){
+  .faq-section{padding:52px 0 118px}
+  .faq-container{width:min(94%,900px)}
+  .faq-item summary{padding:15px 48px 15px 15px}
+  #tracking-modal{padding-left:14px;padding-right:0}
+  #tracking-modal .utility-card{
+    transform:none;
+    width:calc(100% - 14px);
+    margin-left:14px
+  }
+}
