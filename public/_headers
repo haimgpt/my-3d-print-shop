@@ -11,3 +11,10 @@
 
 /products.js
   Cache-Control: public, max-age=0, must-revalidate
+
+
+/app.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/style.css
+  Cache-Control: no-cache, no-store, must-revalidate
