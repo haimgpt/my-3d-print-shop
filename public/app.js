@@ -21,7 +21,6 @@ const productColorWrap = $("#product-color-wrap");
 const engravingWrap = $("#product-engraving-wrap");
 const engravingInput = $("#product-engraving");
 const aiModal = $("#ai-modal");
-const trackingModal = $("#tracking-modal");
 
 let activeProductId = null;
 let selectedProductColor = "";
@@ -220,7 +219,6 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") {
     if (productModal.classList.contains("open")) closeProductModal();
     if (aiModal.classList.contains("open")) closeUtility(aiModal);
-    if (trackingModal.classList.contains("open")) closeUtility(trackingModal);
   }
 });
 
@@ -321,7 +319,6 @@ function renderCart() {
 
 function openCart() {
   closeUtility(aiModal);
-  closeUtility(trackingModal);
   cartDrawer.classList.add("open");
   cartDrawer.setAttribute("aria-hidden", "false");
   document.body.classList.add("no-scroll");
@@ -337,8 +334,6 @@ function openUtility(modal) {
   if (!modal) return;
   if (productModal.classList.contains("open")) closeProductModal();
   if (cartDrawer.classList.contains("open")) closeCart();
-  if (modal !== aiModal) closeUtility(aiModal);
-  if (modal !== trackingModal) closeUtility(trackingModal);
   modal.hidden = false;
   requestAnimationFrame(() => modal.classList.add("open"));
   modal.setAttribute("aria-hidden","false");
@@ -371,22 +366,12 @@ $("#search-focus").addEventListener("click", () => {
 });
 search.addEventListener("input", renderProducts);
 
-function createOrderId() {
-  const now = new Date();
-  const date = String(now.getFullYear()).slice(-2) +
-    String(now.getMonth() + 1).padStart(2,"0") +
-    String(now.getDate()).padStart(2,"0");
-  const suffix = Math.floor(1000 + Math.random() * 9000);
-  return `3D-${date}-${suffix}`;
-}
-
 $("#send-order").addEventListener("click", () => {
   const items = cart
     .map(item => ({...item, product: productById(item.id)}))
     .filter(item => item.product);
   if (!items.length) return;
 
-  const orderId = createOrderId();
   const totalCost = items.reduce((sum, item) => sum + ((Number(item.product.priceValue) || 0) * item.qty), 0);
   const list = items.map((item, i) => {
     const options = [
@@ -396,14 +381,7 @@ $("#send-order").addEventListener("click", () => {
     return `${i+1}. ${item.product.name} — ₪${item.product.priceValue} × ${item.qty} = ₪${item.product.priceValue * item.qty}${options ? " — " + options : ""}`;
   }).join("\n");
 
-  localStorage.setItem("last-order", JSON.stringify({
-    id: orderId,
-    status: "ההזמנה נשלחה ב־WhatsApp וממתינה לאישור העסק.",
-    createdAt: new Date().toISOString(),
-    totalCost
-  }));
-
-  window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\nמספר הזמנה: ${orderId}\n\n${list}\n\nסה״כ עלות המוצרים: ₪${totalCost}\n\nאשמח להמשך הזמנה.`), "_blank");
+  window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\n${list}\n\nסה״כ עלות המוצרים: ₪${totalCost}\n\nאשמח להמשך הזמנה.`), "_blank");
 });
 
 function addChatMessage(text, role) {
@@ -436,7 +414,7 @@ function localProductAnswer(question) {
   if (q.includes("מחיר")) {
     return PRODUCTS.map(p => `${p.name}: ${formatPrice(p.priceValue)}`).join(" | ");
   }
-  return "אפשר לשאול אותי על מוצר מסוים, מחיר, צבעים או חריטה. אם ה־AI המקוון עדיין לא הוגדר, אענה לפי המידע המקומי שבקטלוג.";
+  return "אפשר לשאול אותי על מוצר מסוים, מחיר, צבעים או חריטה. אם תרצו תשובה מפורטת יותר, אפשר גם לפנות דרך WhatsApp.";
 }
 
 async function askAi(question) {
@@ -489,41 +467,11 @@ if (aiOpenButton) {
 $("#ai-close").addEventListener("click", () => closeUtility(aiModal));
 aiModal.addEventListener("click", e => { if (e.target === aiModal) closeUtility(aiModal); });
 
-function showTrackingStatus() {
-  const id = $("#tracking-id").value.trim().toUpperCase();
-  const result = $("#tracking-result");
-  const last = JSON.parse(localStorage.getItem("last-order") || "null");
-  if (!id) {
-    result.textContent = "הזינו מספר הזמנה.";
-    return;
-  }
-  if (last && String(last.id).toUpperCase() === id) {
-    const created = new Date(last.createdAt).toLocaleString("he-IL");
-    result.innerHTML = `<strong>${escapeHtml(last.status)}</strong><span>מספר הזמנה: ${escapeHtml(last.id)}</span><span>נוצרה: ${escapeHtml(created)}</span><span>סה״כ: ₪${Number(last.totalCost) || 0}</span>`;
-  } else {
-    result.textContent = "לא נמצאה הזמנה שמורה במכשיר הזה עם המספר שהוזן.";
-  }
-}
-
-const trackOpenButton = $("#track-open");
-if (trackOpenButton) {
-  trackOpenButton.addEventListener("click", () => {
-    openUtility(trackingModal);
-    setQuickNavActive(trackOpenButton);
-    const last = JSON.parse(localStorage.getItem("last-order") || "null");
-    if (last?.id) $("#tracking-id").value = last.id;
-  });
-}
-$("#tracking-close").addEventListener("click", () => closeUtility(trackingModal));
-$("#tracking-check").addEventListener("click", showTrackingStatus);
-trackingModal.addEventListener("click", e => { if (e.target === trackingModal) closeUtility(trackingModal); });
-
 document.querySelectorAll(".mobile-nav a").forEach(link => {
   link.addEventListener("click", () => {
     if (productModal.classList.contains("open")) closeProductModal();
     if (cartDrawer.classList.contains("open")) closeCart();
     closeUtility(aiModal);
-    closeUtility(trackingModal);
     setQuickNavActive(link);
   });
 });
@@ -533,7 +481,6 @@ function setQuickNavActive(target) {
   if (target) target.classList.add("active");
 }
 
-const homeQuick = document.querySelector('.mobile-nav a[href="#top"]');
 const productsQuick = document.querySelector('.mobile-nav a[href="#products"]');
 if (productsQuick) setQuickNavActive(productsQuick);
 
