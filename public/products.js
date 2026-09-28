@@ -1,7 +1,8 @@
 // =====================================================
 // עריכת מוצרים
-// priceValue הוא המחיר המספרי בשקלים ומשמש לחישוב הסל.
-// image יכול להיות קובץ מתוך public/images/ למשל: "images/stand.jpg"
+// colors = הצבעים שהלקוח יכול לבחור.
+// engravable = האם להציג אפשרות חריטה במוצר.
+// engravingMaxLength = מספר התווים המרבי לחריטה.
 // =====================================================
 const PRODUCTS = [
   {
@@ -10,6 +11,8 @@ const PRODUCTS = [
     category: "שימושי",
     description: "מעמד שולחני מודפס בתלת־ממד.",
     priceValue: 35,
+    colors: ["שחור", "לבן", "בז׳", "כחול"],
+    engravable: false,
     image: ""
   },
   {
@@ -18,6 +21,9 @@ const PRODUCTS = [
     category: "מתנות",
     description: "מחזיק מפתחות מודפס בתלת־ממד.",
     priceValue: 20,
+    colors: ["שחור", "לבן", "אדום", "כחול"],
+    engravable: true,
+    engravingMaxLength: 40,
     image: ""
   },
   {
@@ -26,6 +32,8 @@ const PRODUCTS = [
     category: "דקורציה",
     description: "פסלון או דגם מודפס בתלת־ממד.",
     priceValue: null,
+    colors: ["שחור", "לבן", "בז׳"],
+    engravable: false,
     image: ""
   },
   {
@@ -34,6 +42,8 @@ const PRODUCTS = [
     category: "שימושי",
     description: "ארגונית מודפסת בתלת־ממד לשולחן העבודה.",
     priceValue: 55,
+    colors: ["שחור", "לבן", "בז׳", "אפור"],
+    engravable: false,
     image: ""
   }
 ];
