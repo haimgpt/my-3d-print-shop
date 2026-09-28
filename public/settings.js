@@ -4,12 +4,11 @@
 const SITE_SETTINGS = {
   businessName: "3D Print Studio",
   pageTitle: "3D Print Studio | הדפסות תלת־ממד",
-  heroTitle: "מוצרים מקוריים שמודפסים במיוחד בשבילכם.",
-  heroText: "בחרו מתוך המוצרים המוכנים, פתחו מוצר לפרטים, בחרו כמות והוסיפו לסל.",
+    heroText: "בחרו מתוך המוצרים המוכנים, פתחו מוצר לפרטים, בחרו כמות והוסיפו לסל.",
 
   // מספר WhatsApp בפורמט בינלאומי, ללא + וללא מקפים.
   // דוגמה לישראל: 972501234567
-  whatsappNumber: "972500000000",
+  whatsappNumber: "972503939881",
 
   // לאחר שתקבל כתובת Cloudflare, הדבק אותה כאן.
   // דוגמה: https://my-3d-shop.example.workers.dev
