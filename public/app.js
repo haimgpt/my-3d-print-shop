@@ -6,6 +6,14 @@ const empty = $("#empty-state");
 const resultCount = $("#result-count");
 const cartDrawer = $("#cart");
 const cartItems = $("#cart-items");
+const productModal = $("#product-modal");
+const productModalMedia = $("#product-modal-media");
+const productModalTitle = $("#product-modal-title");
+const productModalCategory = $("#product-modal-category");
+const productModalDescription = $("#product-modal-description");
+const productModalPrice = $("#product-modal-price");
+const productModalAdd = $("#product-modal-add");
+let activeProductId = null;
 
 let selectedCategory = "הכל";
 let cart = JSON.parse(localStorage.getItem("3d-cart") || "[]");
@@ -58,6 +66,9 @@ function renderProducts() {
       ? `<img src="${p.image}" alt="${p.name}" class="product-image">`
       : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
 
+    card.setAttribute("tabindex","0");
+    card.setAttribute("role","button");
+    card.setAttribute("aria-label", `פתח פרטים על ${p.name}`);
     card.innerHTML = `
       ${media}
       <div class="product-content">
@@ -66,16 +77,56 @@ function renderProducts() {
         <p>${p.description}</p>
         <div class="product-bottom">
           <strong>${p.price}</strong>
-          <button class="add-btn" data-id="${p.id}">הוספה לסל</button>
         </div>
       </div>`;
+    card.addEventListener("click", () => openProductModal(p.id));
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openProductModal(p.id);
+      }
+    });
     grid.appendChild(card);
   });
-
-  document.querySelectorAll(".add-btn").forEach(btn => {
-    btn.addEventListener("click", () => addToCart(btn.dataset.id));
-  });
 }
+
+function openProductModal(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  activeProductId = id;
+  productModalTitle.textContent = p.name;
+  productModalCategory.textContent = p.category;
+  productModalDescription.textContent = p.description;
+  productModalPrice.textContent = p.price;
+  productModalMedia.innerHTML = p.image
+    ? `<img src="${p.image}" alt="${p.name}">`
+    : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
+  productModal.classList.add("open");
+  productModal.setAttribute("aria-hidden","false");
+  document.body.classList.add("no-scroll");
+  $("#product-modal-close").focus();
+}
+
+function closeProductModal() {
+  productModal.classList.remove("open");
+  productModal.setAttribute("aria-hidden","true");
+  document.body.classList.remove("no-scroll");
+  activeProductId = null;
+}
+
+$("#product-modal-close").addEventListener("click", closeProductModal);
+productModal.addEventListener("click", e => {
+  if (e.target === productModal) closeProductModal();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && productModal.classList.contains("open")) closeProductModal();
+});
+productModalAdd.addEventListener("click", () => {
+  if (!activeProductId) return;
+  const id = activeProductId;
+  closeProductModal();
+  addToCart(id);
+});
 
 function addToCart(id) {
   if (!cart.includes(id)) cart.push(id);
