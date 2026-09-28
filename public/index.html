@@ -6,7 +6,7 @@
   <title>3D Print Studio | הדפסות תלת־ממד</title>
   <meta name="description" content="מוצרי תלת־ממד מוכנים לבחירה והזמנה." />
   <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#fffaf0" />
+  <meta name="theme-color" content="#f7f7f5" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -60,7 +60,7 @@
           </details>
           <details class="faq-item">
             <summary>איך אפשר לשאול שאלה על מוצר?</summary>
-            <p>אפשר ללחוץ על “שאל AI” בסרגל התחתון ולשאול על המוצרים. אם תשובת ה־AI לא הייתה מספיק ברורה או מדויקת, אפשר לפנות אלינו ישירות ב־WhatsApp ולנסח את השאלה בפירוט כדי שנוכל לעזור בצורה מדויקת יותר.</p>
+            <p>אם יש שאלה על מוצר, צבע, מחיר או פרטים נוספים, אפשר לפנות אלינו ישירות ב־WhatsApp ולנסח את השאלה בצורה מפורטת כדי שנוכל לעזור בצורה מדויקת יותר.</p>
           </details>
           <details class="faq-item">
             <summary>איך יוצרים קשר לגבי ההזמנה?</summary>
@@ -83,12 +83,6 @@
         <div class="product-option" id="product-color-wrap">
           <span class="quantity-label">בחרו צבע</span>
           <div id="product-colors" class="color-options" aria-label="בחירת צבע"></div>
-        </div>
-
-        <div class="product-option engraving-wrap" id="product-engraving-wrap" hidden>
-          <label class="quantity-label" for="product-engraving">טקסט לחריטה</label>
-          <input id="product-engraving" class="engraving-input" type="text" maxlength="40" placeholder="כתבו כאן את החריטה הרצויה" />
-          <small>עד 40 תווים</small>
         </div>
 
         <div class="product-quantity-wrap">
@@ -126,30 +120,9 @@
     </div>
   </aside>
 
-  <div class="utility-modal" id="ai-modal" aria-hidden="true" hidden>
-    <div class="utility-card ai-card" role="dialog" aria-modal="true" aria-labelledby="ai-title">
-      <div class="utility-head">
-        <div>
-          <span class="eyebrow">עוזר חכם</span>
-          <h2 id="ai-title">שאלו את ה־AI על המוצרים</h2>
-        </div>
-        <button class="icon-btn" id="ai-close" aria-label="סגור AI">✕</button>
-      </div>
-      <div class="ai-chat" id="ai-chat" aria-live="polite">
-        <div class="ai-message assistant">שלום! אפשר לשאול אותי על מחירים, צבעים, חריטה והמוצרים שבקטלוג.</div>
-      </div>
-      <form class="ai-form" id="ai-form">
-        <input id="ai-question" type="text" maxlength="500" placeholder="למשל: איזה מוצר מתאים למתנה עם חריטה?" autocomplete="off" />
-        <button class="btn primary" type="submit" id="ai-send">שליחה</button>
-      </form>
-      <small class="utility-note">העוזר עונה לפי המידע שמופיע בקטלוג.</small>
-    </div>
-  </div>
-
   <nav class="mobile-nav" aria-label="ניווט מהיר">
     <a class="mobile-nav-btn" href="#top"><span class="mobile-nav-icon">⌂</span><span>בית</span></a>
     <a class="mobile-nav-btn" href="#products"><span class="mobile-nav-icon">▦</span><span>מוצרים</span></a>
-    <button class="mobile-nav-btn" id="ai-open"><span class="mobile-nav-icon">✦</span><span>שאל AI</span></button>
     <button class="mobile-nav-btn" id="mobile-cart"><span class="mobile-nav-icon">🛒</span><span>סל <b id="mobile-cart-count">0</b></span></button>
   </nav>
 
