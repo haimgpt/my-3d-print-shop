@@ -13,10 +13,25 @@ const productModalCategory = $("#product-modal-category");
 const productModalDescription = $("#product-modal-description");
 const productModalPrice = $("#product-modal-price");
 const productModalAdd = $("#product-modal-add");
-let activeProductId = null;
+const productQty = $("#product-qty");
+const productQtyMinus = $("#product-qty-minus");
+const productQtyPlus = $("#product-qty-plus");
 
+let activeProductId = null;
 let selectedCategory = "הכל";
-let cart = JSON.parse(localStorage.getItem("3d-cart") || "[]");
+let cart = normalizeCart(JSON.parse(localStorage.getItem("3d-cart") || "[]"));
+
+function normalizeCart(raw) {
+  if (!Array.isArray(raw)) return [];
+  if (raw.length && typeof raw[0] === "string") {
+    const counts = {};
+    raw.forEach(id => counts[id] = (counts[id] || 0) + 1);
+    return Object.entries(counts).map(([id, qty]) => ({id, qty}));
+  }
+  return raw
+    .filter(x => x && x.id)
+    .map(x => ({id: x.id, qty: Math.max(1, Number(x.qty) || 1)}));
+}
 
 document.title = SITE_SETTINGS.pageTitle;
 $("#brand-name").textContent = SITE_SETTINGS.businessName;
@@ -27,8 +42,7 @@ $("#hero-text").textContent = SITE_SETTINGS.heroText;
 function waLink(message) {
   return `https://wa.me/${SITE_SETTINGS.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
-$("#whatsapp-hero").href = waLink("שלום, הגעתי מהאתר ורציתי לשאול על הדפסה בתלת־ממד.");
-$("#whatsapp-custom").href = waLink("שלום, יש לי רעיון להדפסה אישית בתלת־ממד.");
+$("#whatsapp-hero").href = waLink("שלום, הגעתי מהאתר ורציתי לשאול על אחד המוצרים.");
 $("#year").textContent = new Date().getFullYear();
 
 const categories = ["הכל", ...new Set(PRODUCTS.map(p => p.category))];
@@ -75,9 +89,7 @@ function renderProducts() {
         <span class="category">${p.category}</span>
         <h3>${p.name}</h3>
         <p>${p.description}</p>
-        <div class="product-bottom">
-          <strong>${p.price}</strong>
-        </div>
+        <div class="product-bottom"><strong>${p.price}</strong></div>
       </div>`;
     card.addEventListener("click", () => openProductModal(p.id));
     card.addEventListener("keydown", e => {
@@ -90,6 +102,10 @@ function renderProducts() {
   });
 }
 
+function clampQty(value) {
+  return Math.min(99, Math.max(1, Number(value) || 1));
+}
+
 function openProductModal(id) {
   const p = PRODUCTS.find(x => x.id === id);
   if (!p) return;
@@ -98,6 +114,7 @@ function openProductModal(id) {
   productModalCategory.textContent = p.category;
   productModalDescription.textContent = p.description;
   productModalPrice.textContent = p.price;
+  productQty.value = 1;
   productModalMedia.innerHTML = p.image
     ? `<img src="${p.image}" alt="${p.name}">`
     : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
@@ -114,6 +131,10 @@ function closeProductModal() {
   activeProductId = null;
 }
 
+productQtyMinus.addEventListener("click", () => productQty.value = clampQty(Number(productQty.value) - 1));
+productQtyPlus.addEventListener("click", () => productQty.value = clampQty(Number(productQty.value) + 1));
+productQty.addEventListener("change", () => productQty.value = clampQty(productQty.value));
+
 $("#product-modal-close").addEventListener("click", closeProductModal);
 productModal.addEventListener("click", e => {
   if (e.target === productModal) closeProductModal();
@@ -124,12 +145,15 @@ document.addEventListener("keydown", e => {
 productModalAdd.addEventListener("click", () => {
   if (!activeProductId) return;
   const id = activeProductId;
+  const qty = clampQty(productQty.value);
   closeProductModal();
-  addToCart(id);
+  addToCart(id, qty);
 });
 
-function addToCart(id) {
-  if (!cart.includes(id)) cart.push(id);
+function addToCart(id, qty = 1) {
+  const existing = cart.find(item => item.id === id);
+  if (existing) existing.qty += qty;
+  else cart.push({id, qty});
   saveCart();
   openCart();
 }
@@ -139,32 +163,62 @@ function saveCart() {
   renderCart();
 }
 
+function setCartQty(id, qty) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty = clampQty(qty);
+  saveCart();
+}
+
 function renderCart() {
-  const products = cart.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
-  $("#cart-count").textContent = products.length;
-  $("#mobile-cart-count").textContent = products.length;
+  const items = cart
+    .map(item => ({...item, product: PRODUCTS.find(p => p.id === item.id)}))
+    .filter(item => item.product);
+
+  const totalUnits = items.reduce((sum, item) => sum + item.qty, 0);
+  $("#cart-count").textContent = totalUnits;
+  $("#mobile-cart-count").textContent = totalUnits;
   cartItems.innerHTML = "";
 
-  if (!products.length) {
+  if (!items.length) {
     cartItems.innerHTML = `<p class="cart-empty">הסל עדיין ריק. בחרו מוצרים שמעניינים אתכם.</p>`;
     return;
   }
 
-  products.forEach(p => {
+  items.forEach(({product:p, qty}) => {
     const item = document.createElement("div");
     item.className = "cart-item";
     item.innerHTML = `
-      <div><strong>${p.name}</strong><span>${p.price}</span></div>
-      <button aria-label="הסר ${p.name}" data-remove="${p.id}">✕</button>`;
+      <div class="cart-item-info">
+        <strong>${p.name}</strong>
+        <span>${p.price}</span>
+        <div class="cart-qty">
+          <button data-dec="${p.id}" aria-label="הפחת כמות">−</button>
+          <span aria-label="כמות">${qty}</span>
+          <button data-inc="${p.id}" aria-label="הגדל כמות">+</button>
+        </div>
+      </div>
+      <button class="remove-item" aria-label="הסר ${p.name}" data-remove="${p.id}">✕</button>`;
     cartItems.appendChild(item);
   });
 
-  document.querySelectorAll("[data-remove]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      cart = cart.filter(id => id !== btn.dataset.remove);
-      saveCart();
-    });
-  });
+  document.querySelectorAll("[data-dec]").forEach(btn => btn.addEventListener("click", () => {
+    const item = cart.find(x => x.id === btn.dataset.dec);
+    if (!item) return;
+    if (item.qty <= 1) cart = cart.filter(x => x.id !== item.id);
+    else item.qty -= 1;
+    saveCart();
+  }));
+  document.querySelectorAll("[data-inc]").forEach(btn => btn.addEventListener("click", () => {
+    const item = cart.find(x => x.id === btn.dataset.inc);
+    if (!item) return;
+    item.qty = clampQty(item.qty + 1);
+    saveCart();
+  }));
+  document.querySelectorAll("[data-remove]").forEach(btn => btn.addEventListener("click", () => {
+    cart = cart.filter(item => item.id !== btn.dataset.remove);
+    saveCart();
+  }));
 }
 
 function openCart() {
@@ -190,10 +244,12 @@ $("#search-focus").addEventListener("click", () => {
 search.addEventListener("input", renderProducts);
 
 $("#send-order").addEventListener("click", () => {
-  const products = cart.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
-  if (!products.length) return;
-  const list = products.map((p, i) => `${i+1}. ${p.name} — ${p.price}`).join("\n");
-  window.open(waLink(`שלום, אני מתעניין/ת במוצרים הבאים מהאתר:\n${list}\n\nאשמח לפרטים.`), "_blank");
+  const items = cart
+    .map(item => ({...item, product: PRODUCTS.find(p => p.id === item.id)}))
+    .filter(item => item.product);
+  if (!items.length) return;
+  const list = items.map((item, i) => `${i+1}. ${item.product.name} — כמות: ${item.qty} — ${item.product.price}`).join("\n");
+  window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\n${list}\n\nאשמח להמשך הזמנה.`), "_blank");
 });
 
 renderProducts();
