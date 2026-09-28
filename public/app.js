@@ -86,7 +86,10 @@ function renderProducts() {
         <span class="category">${p.category}</span>
         <h3>${p.name}</h3>
         <p>${p.description}</p>
-        <div class="product-bottom"><strong>${formatPrice(p.priceValue)}</strong></div>
+        <div class="product-bottom">
+          <strong>${formatPrice(p.priceValue)}</strong>
+          <span class="card-action" aria-hidden="true">לפרטים</span>
+        </div>
       </div>`;
     card.addEventListener("click", () => openProductModal(p.id));
     card.addEventListener("keydown", e => {
@@ -290,3 +293,14 @@ $("#send-order").addEventListener("click", () => {
 
 renderProducts();
 renderCart();
+
+function setQuickNavActive(target) {
+  document.querySelectorAll(".mobile-nav-btn").forEach(btn => btn.classList.remove("active"));
+  if (target) target.classList.add("active");
+}
+const homeQuick = document.querySelector('.mobile-nav a[href="#top"]');
+const productsQuick = document.querySelector('.mobile-nav a[href="#products"]');
+if (homeQuick) homeQuick.addEventListener("click", () => setQuickNavActive(homeQuick));
+if (productsQuick) productsQuick.addEventListener("click", () => setQuickNavActive(productsQuick));
+$("#mobile-cart").addEventListener("click", () => setQuickNavActive($("#mobile-cart")));
+if (productsQuick) setQuickNavActive(productsQuick);
