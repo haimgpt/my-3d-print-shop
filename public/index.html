@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>3D Print Studio | הדפסות תלת־ממד</title>
+  <meta name="description" content="הדפסות תלת־ממד בהתאמה אישית. מוצרים, דגמים ומתנות לפי הזמנה." />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#products">דלג למוצרים</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" id="brand-name">3D Print Studio</a>
+      <div class="nav-actions">
+        <button class="icon-btn" id="search-focus" aria-label="עבור לחיפוש">🔎</button>
+        <button class="cart-btn" id="cart-open" aria-label="פתח סל">סל <span id="cart-count">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-copy">
+        <span class="eyebrow">הדפסות תלת־ממד בהתאמה אישית</span>
+        <h1 id="hero-title">מוצרים מקוריים שמודפסים במיוחד בשבילכם.</h1>
+        <p id="hero-text">בחרו מוצר, חפשו בקלות או שלחו רעיון משלכם להזמנה אישית.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#products">למוצרים</a>
+          <a class="btn ghost" id="whatsapp-hero" href="#" target="_blank" rel="noopener">דברו איתי ב־WhatsApp</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="אזור להצגת תמונת מוצר מובילה">
+        <div class="hero-badge">3D</div>
+      </div>
+    </section>
+
+    <section class="catalog-wrap">
+      <div class="container">
+        <div class="catalog-toolbar">
+          <div class="search-box">
+            <span>🔎</span>
+            <input id="search" type="search" placeholder="חיפוש מוצר..." autocomplete="off" aria-label="חיפוש מוצרים" />
+          </div>
+          <div id="categories" class="chips" aria-label="סינון קטגוריות"></div>
+        </div>
+
+        <div class="catalog-head">
+          <div>
+            <span class="eyebrow">קטלוג</span>
+            <h2 id="products">בחרו מוצר</h2>
+          </div>
+          <span id="result-count" class="result-count"></span>
+        </div>
+
+        <div id="product-grid" class="grid" aria-live="polite"></div>
+        <div id="empty-state" class="empty" hidden>לא מצאנו מוצר מתאים. נסו חיפוש אחר.</div>
+      </div>
+    </section>
+
+    <section class="about container">
+      <div>
+        <span class="eyebrow">הזמנה אישית</span>
+        <h2>יש לכם רעיון משלכם?</h2>
+      </div>
+      <div>
+        <p>שלחו תמונה, סקיצה או תיאור קצר. אפשר להכין דגם, מתנה, חלק שימושי או מוצר מותאם אישית.</p>
+        <a class="btn primary" id="whatsapp-custom" href="#" target="_blank" rel="noopener">שליחת רעיון ב־WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <aside class="cart-drawer" id="cart" aria-hidden="true" aria-label="סל מוצרים">
+    <div class="cart-panel">
+      <div class="cart-head">
+        <h2>הבחירה שלי</h2>
+        <button class="icon-btn" id="cart-close" aria-label="סגור סל">✕</button>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-footer">
+        <button class="btn primary full" id="send-order">שליחת הבחירה ב־WhatsApp</button>
+        <button class="btn ghost full" id="clear-cart">ניקוי הסל</button>
+      </div>
+    </div>
+  </aside>
+
+  <nav class="mobile-nav" aria-label="ניווט מהיר">
+    <a href="#top">בית</a>
+    <a href="#products">מוצרים</a>
+    <button id="mobile-cart">סל <span id="mobile-cart-count">0</span></button>
+  </nav>
+
+  <footer>
+    <div class="container footer">
+      <span id="footer-brand">3D Print Studio</span>
+      <span>© <span id="year"></span></span>
+    </div>
+  </footer>
+
+  <script src="settings.js"></script>
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
