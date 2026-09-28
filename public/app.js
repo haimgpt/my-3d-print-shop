@@ -30,7 +30,7 @@ function normalizeCart(raw) {
   }
   return raw
     .filter(x => x && x.id)
-    .map(x => ({id: x.id, qty: Math.max(1, Number(x.qty) || 1)}));
+    .map(x => ({id: x.id, qty: Math.min(9, Math.max(1, Number(x.qty) || 1))}));
 }
 
 document.title = SITE_SETTINGS.pageTitle;
@@ -109,6 +109,17 @@ function formatPrice(value) {
   return Number.isFinite(value) ? "₪" + value : "מחיר לא הוגדר";
 }
 
+function updateProductModalPrice() {
+  const p = PRODUCTS.find(x => x.id === activeProductId);
+  if (!p || !Number.isFinite(p.priceValue)) {
+    productModalPrice.textContent = "מחיר לא הוגדר";
+    return;
+  }
+  const qty = clampQty(productQty.value);
+  productQty.value = qty;
+  productModalPrice.textContent = "₪" + p.priceValue + " × " + qty + " = ₪" + (p.priceValue * qty);
+}
+
 function openProductModal(id) {
   const p = PRODUCTS.find(x => x.id === id);
   if (!p) return;
@@ -116,10 +127,10 @@ function openProductModal(id) {
   productModalTitle.textContent = p.name;
   productModalCategory.textContent = p.category;
   productModalDescription.textContent = p.description;
-  productModalPrice.textContent = formatPrice(p.priceValue);
   productModalAdd.disabled = !Number.isFinite(p.priceValue);
   productModalAdd.textContent = Number.isFinite(p.priceValue) ? "הוספה לסל" : "יש לעדכן מחיר";
   productQty.value = 1;
+  updateProductModalPrice();
   productModalMedia.innerHTML = p.image
     ? `<img src="${p.image}" alt="${p.name}">`
     : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
@@ -136,9 +147,16 @@ function closeProductModal() {
   activeProductId = null;
 }
 
-productQtyMinus.addEventListener("click", () => productQty.value = clampQty(Number(productQty.value) - 1));
-productQtyPlus.addEventListener("click", () => productQty.value = clampQty(Number(productQty.value) + 1));
-productQty.addEventListener("change", () => productQty.value = clampQty(productQty.value));
+productQtyMinus.addEventListener("click", () => {
+  productQty.value = clampQty(Number(productQty.value) - 1);
+  updateProductModalPrice();
+});
+productQtyPlus.addEventListener("click", () => {
+  productQty.value = clampQty(Number(productQty.value) + 1);
+  updateProductModalPrice();
+});
+productQty.addEventListener("input", updateProductModalPrice);
+productQty.addEventListener("change", updateProductModalPrice);
 
 $("#product-modal-close").addEventListener("click", closeProductModal);
 productModal.addEventListener("click", e => {
@@ -201,7 +219,7 @@ function renderCart() {
     item.innerHTML = `
       <div class="cart-item-info">
         <strong>${p.name}</strong>
-        <span>${formatPrice(p.priceValue)}</span>
+        <span class="cart-line-total">${formatPrice(p.priceValue)} × ${qty} = <strong>₪${p.priceValue * qty}</strong></span>
         <div class="cart-qty">
           <button data-dec="${p.id}" aria-label="הפחת כמות">−</button>
           <span aria-label="כמות">${qty}</span>
@@ -258,8 +276,9 @@ $("#send-order").addEventListener("click", () => {
     .map(item => ({...item, product: PRODUCTS.find(p => p.id === item.id)}))
     .filter(item => item.product);
   if (!items.length) return;
-  const list = items.map((item, i) => `${i+1}. ${item.product.name} — כמות: ${item.qty} — ${item.product.price}`).join("\n");
-  window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\n${list}\n\nאשמח להמשך הזמנה.`), "_blank");
+  const totalCost = items.reduce((sum, item) => sum + ((Number(item.product.priceValue) || 0) * item.qty), 0);
+  const list = items.map((item, i) => `${i+1}. ${item.product.name} — ₪${item.product.priceValue} × ${item.qty} = ₪${item.product.priceValue * item.qty}`).join("\n");
+  window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\n${list}\n\nסה״כ עלות המוצרים: ₪${totalCost}\n\nאשמח להמשך הזמנה.`), "_blank");
 });
 
 renderProducts();
