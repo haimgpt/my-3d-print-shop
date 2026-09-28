@@ -380,3 +380,14 @@ footer{border-color:var(--line);background:#fffaf0}
   .mobile-nav .mobile-nav-btn:active{background:#ead9c5}
   .mobile-nav b{background:#8b5e3c;color:#fff}
 }
+
+
+/* ===== Simplified homepage + cart totals ===== */
+.hero-copy h1,.hero-points,.trust-strip{display:none!important}
+.hero{min-height:430px}
+.cart-line-total{font-weight:600;color:#4b4036!important}
+.cart-line-total strong{color:#2b2a28}
+.cart-total{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 4px 16px;border-top:1px solid #d9cdbd;font-size:1.05rem}
+.cart-total strong{font-size:1.35rem;color:#2b2a28}
+.btn:disabled{opacity:.48;cursor:not-allowed}
+@media(max-width:850px){.hero{min-height:auto}}
