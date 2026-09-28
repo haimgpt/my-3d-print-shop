@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-label="סט מגש בעיצוב לבית בצבע שחור">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#eeeae4"/></linearGradient>
+  <linearGradient id="main" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2a2b2d"/><stop offset="1" stop-color="#090a0b"/></linearGradient>
+  <filter id="s"><feDropShadow dx="0" dy="18" stdDeviation="15" flood-opacity=".18"/></filter>
+</defs>
+<rect width="900" height="900" fill="url(#bg)"/>
+<ellipse cx="450" cy="700" rx="345" ry="88" fill="#000" opacity=".08"/>
+<g filter="url(#s)">
+  <ellipse cx="450" cy="650" rx="330" ry="105" fill="url(#main)"/>
+  <ellipse cx="450" cy="625" rx="300" ry="82" fill="#2a2b2d"/>
+  <rect x="120" y="590" width="660" height="76" rx="36" fill="url(#main)"/>
+  <path d="M205 560V335c0-115 80-210 180-210s180 95 180 210v225h-70V335c0-75-48-135-110-135s-110 60-110 135v225z" fill="url(#main)"/>
+  <path d="M350 560V395c0-88 63-160 142-160s142 72 142 160v165h-62V395c0-50-36-92-80-92s-80 42-80 92v165z" fill="url(#main)" opacity=".92"/>
+  <path d="M610 290h120l-20 70c45 48 65 105 65 175 0 92-34 157-104 195h-91c-70-38-104-103-104-195 0-70 20-127 65-175l-20-70z" fill="url(#main)"/>
+  <g stroke="#090a0b" stroke-width="8" opacity=".4">
+    <path d="M575 408h160M570 445h170M568 482h174M570 519h170M578 556h154"/>
+  </g>
+  <g stroke="#b99245" stroke-width="6" fill="none" stroke-linecap="round">
+    <path d="M641 290c0-65-35-130-70-180M651 290c15-70 35-135 72-188M663 290c40-70 78-120 110-148M629 290c-15-65-48-112-74-143"/>
+  </g>
+  <g fill="#e6d2a6">
+    <ellipse cx="562" cy="105" rx="19" ry="36" transform="rotate(-24 562 105)"/>
+    <ellipse cx="724" cy="96" rx="18" ry="36" transform="rotate(22 724 96)"/>
+    <ellipse cx="777" cy="138" rx="17" ry="34" transform="rotate(48 777 138)"/>
+    <ellipse cx="548" cy="144" rx="17" ry="31" transform="rotate(-40 548 144)"/>
+  </g>
+  <rect x="350" y="535" width="125" height="105" rx="28" fill="url(#main)"/>
+  <ellipse cx="413" cy="545" rx="50" ry="15" fill="#fff7dc"/>
+  <path d="M412 545c-15-30 8-50 16-68 9 20 25 38 5 68z" fill="#ffd66f"/>
+  <text x="488" y="650" font-family="Arial,sans-serif" font-size="82" font-weight="900" fill="#090a0b">HOME</text>
+</g>
+</svg>
