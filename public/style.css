@@ -1363,3 +1363,5 @@ body{
   .customer-form>*{grid-column:1!important}
   .bit-mark{width:64px;height:64px;border-radius:20px}
 }
+
+.color-olive .color-dot{background:#66713f;border-color:#4c5630}
