@@ -104,5 +104,25 @@ const PRODUCTS = [
     colors: PRODUCT_COLORS,
     image: "images/decor-star-black.svg",
     images: {"שחור":"images/decor-star-black.svg","לבן":"images/decor-star-white.svg","ורוד":"images/decor-star-pink.svg","כחול":"images/decor-star-blue.svg"}
+  },
+  {
+    id: "home-tray-set",
+    name: "סט מגש בעיצוב לבית",
+    category: "דקורציה",
+    description: "סט דקורטיבי לבית הכולל מגש ופריטי עיצוב במראה מודרני.",
+    priceValue: 110,
+    colors: PRODUCT_COLORS,
+    image: "images/home-tray-set-black.svg",
+    images: {"שחור":"images/home-tray-set-black.svg","לבן":"images/home-tray-set-white.svg","ורוד":"images/home-tray-set-pink.svg","כחול":"images/home-tray-set-blue.svg"}
+  },
+  {
+    id: "ribbed-planter",
+    name: "עציץ מעוצב",
+    category: "דקורציה",
+    description: "עציץ מודפס בתלת־ממד עם טקסטורה אנכית בעיצוב נקי לבית.",
+    priceValue: 50,
+    colors: [...PRODUCT_COLORS, "ירוק זית"],
+    image: "images/ribbed-planter-black.svg",
+    images: {"שחור":"images/ribbed-planter-black.svg","לבן":"images/ribbed-planter-white.svg","ורוד":"images/ribbed-planter-pink.svg","כחול":"images/ribbed-planter-blue.svg","ירוק זית":"images/ribbed-planter-olive.svg"}
   }
 ];
