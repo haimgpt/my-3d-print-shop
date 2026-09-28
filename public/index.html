@@ -6,7 +6,7 @@
   <title>3D Print Studio | הדפסות תלת־ממד</title>
   <meta name="description" content="הדפסות תלת־ממד בהתאמה אישית. מוצרים, דגמים ומתנות לפי הזמנה." />
   <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="theme-color" content="#fffaf0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -25,25 +25,25 @@
   <main id="top">
     <section class="hero container">
       <div class="hero-copy">
-        <span class="eyebrow">הדפסות תלת־ממד בהתאמה אישית</span>
+        <span class="eyebrow">מוצרי תלת־ממד מוכנים לבחירה</span>
         <h1 id="hero-title">מוצרים מקוריים שמודפסים במיוחד בשבילכם.</h1>
         <p id="hero-text">בחרו מוצר, חפשו בקלות או שלחו רעיון משלכם להזמנה אישית.</p>
         <div class="hero-actions">
           <a class="btn primary" href="#products">לצפייה במוצרים</a>
-          <a class="btn ghost" id="whatsapp-hero" href="#" target="_blank" rel="noopener">הזמנה אישית ב־WhatsApp</a>
+          <a class="btn ghost" id="whatsapp-hero" href="#" target="_blank" rel="noopener">שאלות על המוצרים ב־WhatsApp</a>
         </div>
         <div class="hero-points" aria-label="יתרונות">
-          <span>✓ הדפסה לפי הזמנה</span>
-          <span>✓ התאמה אישית</span>
-          <span>✓ שירות מהיר ונוח</span>
+          <span>✓ מוצרים מוכנים מראש</span>
+          <span>✓ בחירה מהירה וברורה</span>
+          <span>✓ הזמנה נוחה מהסל</span>
         </div>
       </div>
       <div class="hero-visual" aria-label="אזור להצגת תמונת מוצר מובילה">
         <div class="visual-glow"></div>
         <div class="hero-badge">3D</div>
         <div class="visual-caption">
-          <strong>הופכים רעיון למוצר אמיתי</strong>
-          <span>דגמים, מתנות, אביזרים וחלקים שימושיים</span>
+          <strong>מבחר מוצרי תלת־ממד</strong>
+          <span>בחרו מוצר, כמות והוסיפו לסל</span>
         </div>
       </div>
     </section>
@@ -52,7 +52,7 @@
       <div class="container trust-grid">
         <div><strong>קל לבחור</strong><span>חיפוש וסינון מהירים</span></div>
         <div><strong>מותאם לסלולר</strong><span>נוח גם ביד אחת</span></div>
-        <div><strong>הזמנה פשוטה</strong><span>שולחים בחירה ב־WhatsApp</span></div>
+        <div><strong>הזמנה פשוטה</strong><span>בוחרים כמות ושולחים מהסל</span></div>
       </div>
     </section>
 
@@ -78,17 +78,6 @@
         <div id="empty-state" class="empty" hidden>לא מצאנו מוצר מתאים. נסו חיפוש אחר.</div>
       </div>
     </section>
-
-    <section class="about container">
-      <div>
-        <span class="eyebrow">הזמנה אישית</span>
-        <h2>יש לכם רעיון משלכם?</h2>
-      </div>
-      <div>
-        <p>שלחו תמונה, סקיצה או תיאור קצר. אפשר להכין דגם, מתנה, חלק שימושי או מוצר מותאם אישית.</p>
-        <a class="btn primary" id="whatsapp-custom" href="#" target="_blank" rel="noopener">שליחת רעיון ב־WhatsApp</a>
-      </div>
-    </section>
   </main>
 
   <div class="product-modal" id="product-modal" aria-hidden="true">
@@ -99,6 +88,14 @@
         <span id="product-modal-category" class="category"></span>
         <h2 id="product-modal-title"></h2>
         <p id="product-modal-description"></p>
+        <div class="product-quantity-wrap">
+          <span class="quantity-label">כמות</span>
+          <div class="quantity-control" aria-label="בחירת כמות">
+            <button type="button" id="product-qty-minus" aria-label="הפחת כמות">−</button>
+            <input id="product-qty" type="number" min="1" max="99" value="1" inputmode="numeric" aria-label="כמות" />
+            <button type="button" id="product-qty-plus" aria-label="הגדל כמות">+</button>
+          </div>
+        </div>
         <div class="product-modal-bottom">
           <strong id="product-modal-price"></strong>
           <button class="btn primary" id="product-modal-add">הוספה לסל</button>
