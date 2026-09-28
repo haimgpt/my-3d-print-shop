@@ -4,7 +4,7 @@
 const SITE_SETTINGS = {
   businessName: "3D Print Studio",
   pageTitle: "3D Print Studio | הדפסות תלת־ממד",
-    heroText: "בחרו מתוך המוצרים המוכנים, פתחו מוצר לפרטים, בחרו כמות והוסיפו לסל.",
+    heroText: "בחרו מתוך המוצרים והוסיפו לסל.",
 
   // מספר WhatsApp בפורמט בינלאומי, ללא + וללא מקפים.
   // דוגמה לישראל: 972501234567
