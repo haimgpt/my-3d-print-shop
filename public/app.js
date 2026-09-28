@@ -63,11 +63,14 @@ function normalizeCart(raw) {
   }
   return raw
     .filter(x => x && x.id && productById(x.id))
-    .map(x => ({
-      id: x.id,
-      qty: Math.min(9, Math.max(1, Number(x.qty) || 1)),
-      color: PRODUCT_COLORS.includes(x.color) ? x.color : defaultColor(x.id)
-    }));
+    .map(x => {
+      const product = productById(x.id);
+      return {
+        id: x.id,
+        qty: Math.min(9, Math.max(1, Number(x.qty) || 1)),
+        color: product?.colors?.includes(x.color) ? x.color : defaultColor(x.id)
+      };
+    });
 }
 
 document.title = SITE_SETTINGS.pageTitle;
@@ -177,7 +180,7 @@ function renderColorOptions(p) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "color-choice color-" + ({
-      "שחור":"black","לבן":"white","ורוד":"pink","כחול":"blue"
+      "שחור":"black","לבן":"white","ורוד":"pink","כחול":"blue","ירוק זית":"olive"
     }[color] || "default") + (index === 0 ? " active" : "");
     button.innerHTML = `<span class="color-dot" aria-hidden="true"></span><span>${color}</span>`;
     button.setAttribute("aria-pressed", index === 0 ? "true" : "false");
