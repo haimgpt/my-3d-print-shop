@@ -18,6 +18,12 @@ const productQtyMinus = $("#product-qty-minus");
 const productQtyPlus = $("#product-qty-plus");
 const productColors = $("#product-colors");
 const productColorWrap = $("#product-color-wrap");
+const checkoutModal = $("#checkout-modal");
+const customerForm = $("#customer-form");
+const checkoutPaymentTotal = $("#checkout-payment-total");
+const checkoutTotalStep1 = $("#checkout-total-step1");
+const paymentOrderSummary = $("#payment-order-summary");
+let checkoutCustomer = null;
 
 let activeProductId = null;
 let selectedProductColor = "";
@@ -229,7 +235,9 @@ productModal.addEventListener("click", e => {
   if (e.target === productModal) closeProductModal();
 });
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape" && productModal.classList.contains("open")) closeProductModal();
+  if (e.key !== "Escape") return;
+  if (productModal.classList.contains("open")) closeProductModal();
+  if (checkoutModal?.classList.contains("open")) closeCheckout();
 });
 
 productModalAdd.addEventListener("click", () => {
@@ -254,6 +262,65 @@ function addToCart(id, qty = 1, color = defaultColor(id)) {
 function saveCart() {
   localStorage.setItem("3d-cart", JSON.stringify(cart));
   renderCart();
+}
+
+function cartSnapshot() {
+  return cart
+    .map(item => ({...item, product: productById(item.id)}))
+    .filter(item => item.product);
+}
+
+function cartTotalValue() {
+  return cartSnapshot().reduce((sum, item) => sum + ((Number(item.product.priceValue) || 0) * item.qty), 0);
+}
+
+function setCheckoutStep(step) {
+  document.querySelectorAll("[data-checkout-step]").forEach(pane => {
+    const active = Number(pane.dataset.checkoutStep) === step;
+    pane.hidden = !active;
+    pane.classList.toggle("active", active);
+  });
+  document.querySelectorAll("[data-step-indicator]").forEach(indicator => {
+    indicator.classList.toggle("active", Number(indicator.dataset.stepIndicator) <= step);
+  });
+}
+
+function renderPaymentSummary() {
+  const items = cartSnapshot();
+  paymentOrderSummary.innerHTML = items.map(item => `
+    <div class="payment-summary-line">
+      <div>
+        <strong>${escapeHtml(item.product.name)}</strong>
+        <span>${escapeHtml(item.color)} · כמות ${item.qty}</span>
+      </div>
+      <b>₪${item.product.priceValue * item.qty}</b>
+    </div>
+  `).join("");
+  const total = cartTotalValue();
+  checkoutTotalStep1.textContent = "₪" + total;
+  checkoutPaymentTotal.textContent = "₪" + total;
+}
+
+function openCheckout() {
+  if (!cartSnapshot().length) return;
+  closeCart();
+  renderPaymentSummary();
+  setCheckoutStep(1);
+  checkoutModal.hidden = false;
+  requestAnimationFrame(() => checkoutModal.classList.add("open"));
+  checkoutModal.setAttribute("aria-hidden","false");
+  document.body.classList.add("no-scroll");
+  setTimeout(() => $("#customer-name")?.focus(), 180);
+}
+
+function closeCheckout() {
+  if (!checkoutModal) return;
+  checkoutModal.classList.remove("open");
+  checkoutModal.setAttribute("aria-hidden","true");
+  setTimeout(() => {
+    if (!checkoutModal.classList.contains("open")) checkoutModal.hidden = true;
+  }, 180);
+  document.body.classList.remove("no-scroll");
 }
 
 function escapeHtml(value) {
@@ -346,13 +413,12 @@ $("#search-focus").addEventListener("click", () => {
 });
 search.addEventListener("input", renderProducts);
 
-$("#send-order").addEventListener("click", () => {
-  const items = cart
-    .map(item => ({...item, product: productById(item.id)}))
-    .filter(item => item.product);
-  if (!items.length) return;
+$("#send-order").addEventListener("click", openCheckout);
 
-  const totalCost = items.reduce((sum, item) => sum + ((Number(item.product.priceValue) || 0) * item.qty), 0);
+$("#whatsapp-order").addEventListener("click", () => {
+  const items = cartSnapshot();
+  if (!items.length) return;
+  const totalCost = cartTotalValue();
   const list = items.map((item, i) =>
     `${i+1}. ${item.product.name} — ₪${item.product.priceValue} × ${item.qty} = ₪${item.product.priceValue * item.qty} — צבע: ${item.color}`
   ).join("\n");
@@ -360,6 +426,44 @@ $("#send-order").addEventListener("click", () => {
   window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\n${list}\n\nסה״כ עלות המוצרים: ₪${totalCost}\n\nאשמח להמשך הזמנה.`), "_blank");
 });
 
+customerForm?.addEventListener("submit", e => {
+  e.preventDefault();
+  if (!customerForm.reportValidity()) return;
+
+  const data = new FormData(customerForm);
+  checkoutCustomer = {
+    name: String(data.get("name") || "").trim(),
+    phone: String(data.get("phone") || "").trim(),
+    city: String(data.get("city") || "").trim(),
+    address: String(data.get("address") || "").trim(),
+    delivery: String(data.get("delivery") || "משלוח"),
+    notes: String(data.get("notes") || "").trim()
+  };
+
+  localStorage.setItem("checkout-customer", JSON.stringify(checkoutCustomer));
+  renderPaymentSummary();
+  setCheckoutStep(2);
+});
+
+$("#checkout-back")?.addEventListener("click", () => setCheckoutStep(1));
+$("#checkout-close")?.addEventListener("click", closeCheckout);
+$("#success-close")?.addEventListener("click", closeCheckout);
+checkoutModal?.addEventListener("click", e => {
+  if (e.target === checkoutModal) closeCheckout();
+});
+
+const savedCustomer = JSON.parse(localStorage.getItem("checkout-customer") || "null");
+if (savedCustomer) {
+  $("#customer-name").value = savedCustomer.name || "";
+  $("#customer-phone").value = savedCustomer.phone || "";
+  $("#customer-city").value = savedCustomer.city || "";
+  $("#customer-address").value = savedCustomer.address || "";
+  $("#customer-notes").value = savedCustomer.notes || "";
+  const radio = document.querySelector(`input[name="delivery"][value="${savedCustomer.delivery || "משלוח"}"]`);
+  if (radio) radio.checked = true;
+}
+
+document.querySelectorAll(".mobile-nav a")
 document.querySelectorAll(".mobile-nav a").forEach(link => {
   link.addEventListener("click", () => {
     if (productModal.classList.contains("open")) closeProductModal();
