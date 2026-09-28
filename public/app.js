@@ -334,18 +334,23 @@ function closeCart() {
 }
 
 function openUtility(modal) {
+  if (!modal) return;
   if (productModal.classList.contains("open")) closeProductModal();
   if (cartDrawer.classList.contains("open")) closeCart();
   if (modal !== aiModal) closeUtility(aiModal);
   if (modal !== trackingModal) closeUtility(trackingModal);
-  modal.classList.add("open");
+  modal.hidden = false;
+  requestAnimationFrame(() => modal.classList.add("open"));
   modal.setAttribute("aria-hidden","false");
   document.body.classList.add("no-scroll");
 }
 function closeUtility(modal) {
-  if (!modal) return;
+  if (!modal || modal.hidden) return;
   modal.classList.remove("open");
   modal.setAttribute("aria-hidden","true");
+  window.setTimeout(() => {
+    if (!modal.classList.contains("open")) modal.hidden = true;
+  }, 180);
   if (!productModal.classList.contains("open") && !cartDrawer.classList.contains("open")) {
     document.body.classList.remove("no-scroll");
   }
@@ -473,11 +478,14 @@ $("#ai-form").addEventListener("submit", e => {
   askAi(question.slice(0,500));
 });
 
-$("#ai-open").addEventListener("click", () => {
-  openUtility(aiModal);
-  setQuickNavActive($("#ai-open"));
-  setTimeout(() => $("#ai-question").focus(), 100);
-});
+const aiOpenButton = $("#ai-open");
+if (aiOpenButton) {
+  aiOpenButton.addEventListener("click", () => {
+    openUtility(aiModal);
+    setQuickNavActive(aiOpenButton);
+    setTimeout(() => $("#ai-question")?.focus(), 220);
+  });
+}
 $("#ai-close").addEventListener("click", () => closeUtility(aiModal));
 aiModal.addEventListener("click", e => { if (e.target === aiModal) closeUtility(aiModal); });
 
@@ -497,12 +505,15 @@ function showTrackingStatus() {
   }
 }
 
-$("#track-open").addEventListener("click", () => {
-  openUtility(trackingModal);
-  setQuickNavActive($("#track-open"));
-  const last = JSON.parse(localStorage.getItem("last-order") || "null");
-  if (last?.id) $("#tracking-id").value = last.id;
-});
+const trackOpenButton = $("#track-open");
+if (trackOpenButton) {
+  trackOpenButton.addEventListener("click", () => {
+    openUtility(trackingModal);
+    setQuickNavActive(trackOpenButton);
+    const last = JSON.parse(localStorage.getItem("last-order") || "null");
+    if (last?.id) $("#tracking-id").value = last.id;
+  });
+}
 $("#tracking-close").addEventListener("click", () => closeUtility(trackingModal));
 $("#tracking-check").addEventListener("click", showTrackingStatus);
 trackingModal.addEventListener("click", e => { if (e.target === trackingModal) closeUtility(trackingModal); });
