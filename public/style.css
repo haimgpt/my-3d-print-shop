@@ -735,3 +735,78 @@ footer{background:#f6efe5;border-color:#dfd1be}
   .product-card{border-radius:18px}
   .catalog-head{margin-top:34px}
 }
+
+
+/* ===== Product options, AI assistant and order tracking ===== */
+.product-option{margin:0 0 20px}
+.color-options{display:flex;flex-wrap:wrap;gap:8px}
+.color-choice{
+  min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #d7c4a8;
+  background:#fff;color:#4c3d2f;font-weight:700;cursor:pointer
+}
+.color-choice.active{
+  background:#2b241d;color:#fff;border-color:#2b241d;
+  box-shadow:0 0 0 3px rgba(183,138,73,.18)
+}
+.engraving-wrap small{display:block;margin-top:6px;color:#8a7b6b}
+.engraving-input,.utility-card input{
+  width:100%;min-height:48px;border:1px solid #d7c4a8;border-radius:13px;
+  padding:0 14px;background:#fff;color:#2b241d;outline:0
+}
+.engraving-input:focus,.utility-card input:focus{
+  border-color:#b78a49;box-shadow:0 0 0 4px rgba(183,138,73,.12)
+}
+.cart-option{font-size:.9rem;color:#74675a!important}
+.cart-option strong{color:#3a3027}
+
+.utility-modal{
+  position:fixed;inset:0;z-index:210;display:grid;place-items:center;padding:22px;
+  background:rgba(37,29,21,.38);backdrop-filter:blur(12px);
+  opacity:0;pointer-events:none;transition:.18s ease
+}
+.utility-modal.open{opacity:1;pointer-events:auto}
+.utility-card{
+  width:min(620px,96vw);max-height:calc(100vh - 130px);overflow:auto;
+  background:#fffdf9;border:1px solid #d8c5a9;border-radius:26px;
+  box-shadow:0 30px 90px rgba(50,35,17,.22);padding:24px
+}
+.utility-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px}
+.utility-head h2{margin:3px 0 0;font-size:clamp(1.55rem,4vw,2.25rem);line-height:1.15}
+.utility-note{display:block;margin-top:10px;color:#877969}
+.ai-card{display:flex;flex-direction:column}
+.ai-chat{
+  min-height:250px;max-height:48vh;overflow:auto;display:flex;flex-direction:column;gap:10px;
+  padding:14px;background:#f7f0e6;border:1px solid #e1d2bd;border-radius:18px
+}
+.ai-message{max-width:88%;padding:11px 13px;border-radius:16px;white-space:pre-wrap}
+.ai-message.assistant{align-self:flex-start;background:#fff;border:1px solid #dfcfba;color:#40352b}
+.ai-message.user{align-self:flex-end;background:#2b241d;color:#fff}
+.ai-form{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:12px}
+.ai-form .btn{min-width:92px}
+.tracking-intro{color:#766b60;margin-top:0}
+.tracking-form{display:grid;grid-template-columns:1fr auto;gap:9px}
+.tracking-result{
+  margin-top:14px;padding:14px;border-radius:16px;background:#f7f0e6;border:1px solid #e1d2bd;
+  display:flex;flex-direction:column;gap:5px;color:#504438
+}
+.tracking-result:empty{display:none}
+
+.mobile-nav{
+  width:min(720px,calc(100% - 12px))!important;
+  grid-template-columns:repeat(5,1fr)!important;
+  gap:5px!important;padding:6px!important
+}
+.mobile-nav .mobile-nav-btn{min-width:0;padding:5px 3px!important;font-size:.78rem}
+.mobile-nav .mobile-nav-icon{font-size:1.08rem}
+body{padding-bottom:104px}
+
+@media(max-width:560px){
+  .mobile-nav{bottom:6px!important;border-radius:17px!important}
+  .mobile-nav .mobile-nav-btn{min-height:55px!important;border-radius:12px!important;font-size:.69rem}
+  .mobile-nav .mobile-nav-icon{font-size:1rem}
+  .utility-modal{align-items:end;padding:0 0 92px}
+  .utility-card{width:100%;max-height:calc(100vh - 105px);border-radius:24px 24px 0 0;padding:20px}
+  .ai-form,.tracking-form{grid-template-columns:1fr}
+  .ai-form .btn,.tracking-form .btn{width:100%}
+  .product-modal-content{padding-bottom:34px}
+}
