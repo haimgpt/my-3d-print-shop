@@ -55,24 +55,12 @@
         </div>
         <div class="faq-list">
           <details class="faq-item">
-            <summary>אילו צבעים אפשר לבחור?</summary>
-            <p>בכל מוצר שמציע בחירת צבע, הצבעים הזמינים מופיעים בחלון המוצר לפני ההוספה לסל.</p>
-          </details>
-          <details class="faq-item">
-            <summary>באילו מוצרים אפשר להוסיף חריטה?</summary>
-            <p>אפשרות החריטה מופיעה רק במוצרים שתומכים בה. אם מופיע שדה “טקסט לחריטה”, אפשר להזין בו את הטקסט הרצוי.</p>
-          </details>
-          <details class="faq-item">
             <summary>איך מבצעים הזמנה?</summary>
             <p>בוחרים מוצר, צבע וכמות, מוסיפים לסל ולבסוף לוחצים על “שליחת ההזמנה ב־WhatsApp”.</p>
           </details>
           <details class="faq-item">
-            <summary>איך עוקבים אחרי הזמנה?</summary>
-            <p>לאחר שליחת ההזמנה מתקבל מספר הזמנה. לחצו על “מעקב” בסרגל התחתון והזינו את המספר כדי לראות את הסטטוס הזמין.</p>
-          </details>
-          <details class="faq-item">
             <summary>איך אפשר לשאול שאלה על מוצר?</summary>
-            <p>לחצו על הכפתור “שאל AI” בסרגל התחתון. חלון העוזר החכם ייפתח רק לאחר הלחיצה.</p>
+            <p>אפשר ללחוץ על “שאל AI” בסרגל התחתון ולשאול על המוצרים. אם תשובת ה־AI לא הייתה מספיק ברורה או מדויקת, אפשר לפנות אלינו ישירות ב־WhatsApp ולנסח את השאלה בפירוט כדי שנוכל לעזור בצורה מדויקת יותר.</p>
           </details>
           <details class="faq-item">
             <summary>איך יוצרים קשר לגבי ההזמנה?</summary>
@@ -158,29 +146,10 @@
     </div>
   </div>
 
-  <div class="utility-modal tracking-modal" id="tracking-modal" aria-hidden="true" hidden>
-    <div class="utility-card" role="dialog" aria-modal="true" aria-labelledby="tracking-title">
-      <div class="utility-head">
-        <div>
-          <span class="eyebrow">מעקב הזמנה</span>
-          <h2 id="tracking-title">עקבו אחרי ההזמנה שלכם</h2>
-        </div>
-        <button class="icon-btn" id="tracking-close" aria-label="סגור מעקב הזמנה">✕</button>
-      </div>
-      <p class="tracking-intro">הזינו את מספר ההזמנה שקיבלתם בעת השליחה.</p>
-      <div class="tracking-form">
-        <input id="tracking-id" type="text" placeholder="לדוגמה: 3D-260928-1234" autocomplete="off" />
-        <button class="btn primary" id="tracking-check" type="button">בדיקת סטטוס</button>
-      </div>
-      <div id="tracking-result" class="tracking-result" aria-live="polite"></div>
-    </div>
-  </div>
-
   <nav class="mobile-nav" aria-label="ניווט מהיר">
     <a class="mobile-nav-btn" href="#top"><span class="mobile-nav-icon">⌂</span><span>בית</span></a>
     <a class="mobile-nav-btn" href="#products"><span class="mobile-nav-icon">▦</span><span>מוצרים</span></a>
     <button class="mobile-nav-btn" id="ai-open"><span class="mobile-nav-icon">✦</span><span>שאל AI</span></button>
-    <button class="mobile-nav-btn" id="track-open"><span class="mobile-nav-icon">⌖</span><span>מעקב</span></button>
     <button class="mobile-nav-btn" id="mobile-cart"><span class="mobile-nav-icon">🛒</span><span>סל <b id="mobile-cart-count">0</b></span></button>
   </nav>
 
