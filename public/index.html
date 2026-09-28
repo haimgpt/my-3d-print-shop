@@ -26,16 +26,10 @@
     <section class="hero container">
       <div class="hero-copy">
         <span class="eyebrow">מוצרי תלת־ממד מוכנים לבחירה</span>
-        <h1 id="hero-title">מוצרים מקוריים שמודפסים במיוחד בשבילכם.</h1>
         <p id="hero-text">בחרו מוצר, חפשו בקלות או שלחו רעיון משלכם להזמנה אישית.</p>
         <div class="hero-actions">
           <a class="btn primary" href="#products">לצפייה במוצרים</a>
           <a class="btn ghost" id="whatsapp-hero" href="#" target="_blank" rel="noopener">שאלות על המוצרים ב־WhatsApp</a>
-        </div>
-        <div class="hero-points" aria-label="יתרונות">
-          <span>✓ מוצרים מוכנים מראש</span>
-          <span>✓ בחירה מהירה וברורה</span>
-          <span>✓ הזמנה נוחה מהסל</span>
         </div>
       </div>
       <div class="hero-visual" aria-label="אזור להצגת תמונת מוצר מובילה">
@@ -45,14 +39,6 @@
           <strong>מבחר מוצרי תלת־ממד</strong>
           <span>בחרו מוצר, כמות והוסיפו לסל</span>
         </div>
-      </div>
-    </section>
-
-    <section class="trust-strip">
-      <div class="container trust-grid">
-        <div><strong>קל לבחור</strong><span>חיפוש וסינון מהירים</span></div>
-        <div><strong>מותאם לסלולר</strong><span>נוח גם ביד אחת</span></div>
-        <div><strong>הזמנה פשוטה</strong><span>בוחרים כמות ושולחים מהסל</span></div>
       </div>
     </section>
 
@@ -92,7 +78,7 @@
           <span class="quantity-label">כמות</span>
           <div class="quantity-control" aria-label="בחירת כמות">
             <button type="button" id="product-qty-minus" aria-label="הפחת כמות">−</button>
-            <input id="product-qty" type="number" min="1" max="99" value="1" inputmode="numeric" aria-label="כמות" />
+            <input id="product-qty" type="number" min="1" max="9" value="1" inputmode="numeric" aria-label="כמות" />
             <button type="button" id="product-qty-plus" aria-label="הגדל כמות">+</button>
           </div>
         </div>
@@ -112,6 +98,10 @@
       </div>
       <div id="cart-items" class="cart-items"></div>
       <div class="cart-footer">
+        <div class="cart-total" id="cart-total-wrap">
+          <span>סה״כ עלות המוצרים</span>
+          <strong id="cart-total">₪0</strong>
+        </div>
         <button class="btn primary full" id="send-order">שליחת הבחירה ב־WhatsApp</button>
         <button class="btn ghost full" id="clear-cart">ניקוי הסל</button>
       </div>
