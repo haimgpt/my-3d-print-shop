@@ -111,9 +111,9 @@ const PRODUCTS = [
     category: "דקורציה",
     description: "סט דקורטיבי לבית הכולל מגש ופריטי עיצוב במראה מודרני.",
     priceValue: 110,
-    colors: PRODUCT_COLORS,
-    image: "images/home-tray-set-black.svg",
-    images: {"שחור":"images/home-tray-set-black.svg","לבן":"images/home-tray-set-white.svg","ורוד":"images/home-tray-set-pink.svg","כחול":"images/home-tray-set-blue.svg"}
+    colors: ["שחור", "לבן", "ורוד כהה", "שמנת", "זית"],
+    image: "images/home-tray-set-black.jpg",
+    images: {"שחור":"images/home-tray-set-black.jpg","לבן":"images/home-tray-set-white.jpg","ורוד כהה":"images/home-tray-set-pink-dark.jpg","שמנת":"images/home-tray-set-cream.jpg","זית":"images/home-tray-set-olive.jpg"}
   },
   {
     id: "ribbed-planter",
@@ -121,8 +121,8 @@ const PRODUCTS = [
     category: "דקורציה",
     description: "עציץ מודפס בתלת־ממד עם טקסטורה אנכית בעיצוב נקי לבית.",
     priceValue: 50,
-    colors: [...PRODUCT_COLORS, "ירוק זית"],
-    image: "images/ribbed-planter-black.svg",
-    images: {"שחור":"images/ribbed-planter-black.svg","לבן":"images/ribbed-planter-white.svg","ורוד":"images/ribbed-planter-pink.svg","כחול":"images/ribbed-planter-blue.svg","ירוק זית":"images/ribbed-planter-olive.svg"}
+    colors: ["שחור", "לבן", "ורוד כהה", "שמנת", "זית"],
+    image: "images/ribbed-planter-black.jpg",
+    images: {"שחור":"images/ribbed-planter-black.jpg","לבן":"images/ribbed-planter-white.jpg","ורוד כהה":"images/ribbed-planter-pink-dark.jpg","שמנת":"images/ribbed-planter-cream.jpg","זית":"images/ribbed-planter-olive.jpg"}
   }
 ];
