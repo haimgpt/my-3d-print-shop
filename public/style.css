@@ -783,17 +783,10 @@ footer{background:#f6efe5;border-color:#dfd1be}
 .ai-message.user{align-self:flex-end;background:#2b241d;color:#fff}
 .ai-form{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:12px}
 .ai-form .btn{min-width:92px}
-.tracking-intro{color:#766b60;margin-top:0}
-.tracking-form{display:grid;grid-template-columns:1fr auto;gap:9px}
-.tracking-result{
-  margin-top:14px;padding:14px;border-radius:16px;background:#f7f0e6;border:1px solid #e1d2bd;
-  display:flex;flex-direction:column;gap:5px;color:#504438
-}
-.tracking-result:empty{display:none}
 
 .mobile-nav{
   width:min(720px,calc(100% - 12px))!important;
-  grid-template-columns:repeat(5,1fr)!important;
+  grid-template-columns:repeat(4,1fr)!important;
   gap:5px!important;padding:6px!important
 }
 .mobile-nav .mobile-nav-btn{min-width:0;padding:5px 3px!important;font-size:.78rem}
@@ -806,8 +799,7 @@ body{padding-bottom:104px}
   .mobile-nav .mobile-nav-icon{font-size:1rem}
   .utility-modal{align-items:end;padding:0 0 92px}
   .utility-card{width:100%;max-height:calc(100vh - 105px);border-radius:24px 24px 0 0;padding:20px}
-  .ai-form,.tracking-form{grid-template-columns:1fr}
-  .ai-form .btn,.tracking-form .btn{width:100%}
+  .ai-form,  .ai-form .btn{width:100%}
   .product-modal-content{padding-bottom:34px}
 }
 
@@ -866,17 +858,16 @@ body{padding-bottom:104px}
   line-height:1.75
 }
 
-/* Shift the entire order-tracking card slightly to the left. */
-#tracking-modal .utility-card{transform:translateX(-24px)}
 
 @media(max-width:560px){
   .faq-section{padding:52px 0 118px}
   .faq-container{width:min(94%,900px)}
   .faq-item summary{padding:15px 48px 15px 15px}
-  #tracking-modal{padding-left:14px;padding-right:0}
-  #tracking-modal .utility-card{
-    transform:none;
-    width:calc(100% - 14px);
-    margin-left:14px
-  }
+    }
+
+
+/* ===== Final navigation after removing order tracking ===== */
+.mobile-nav{
+  width:min(620px,calc(100% - 12px))!important;
+  grid-template-columns:repeat(4,1fr)!important;
 }
