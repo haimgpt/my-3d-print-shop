@@ -143,11 +143,104 @@
           <span>סה״כ עלות המוצרים</span>
           <strong id="cart-total">₪0</strong>
         </div>
-        <button class="btn primary full" id="send-order">שליחת ההזמנה ב־WhatsApp</button>
+        <button class="btn primary full" id="send-order">המשך לפרטי לקוח</button>
+        <button class="btn ghost full" id="whatsapp-order">שליחה ב־WhatsApp</button>
         <button class="btn ghost full" id="clear-cart">ניקוי הסל</button>
       </div>
     </div>
   </aside>
+
+
+  <div class="checkout-modal" id="checkout-modal" aria-hidden="true" hidden>
+    <div class="checkout-card" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <button class="checkout-close" id="checkout-close" aria-label="סגור">✕</button>
+
+      <div class="checkout-steps" aria-label="שלבי הזמנה">
+        <span class="checkout-step active" data-step-indicator="1">1 <small>פרטים</small></span>
+        <span class="checkout-step" data-step-indicator="2">2 <small>תשלום</small></span>
+        <span class="checkout-step" data-step-indicator="3">3 <small>אישור</small></span>
+      </div>
+
+      <section class="checkout-pane active" data-checkout-step="1">
+        <span class="eyebrow">כמעט סיימנו</span>
+        <h2 id="checkout-title">פרטי הלקוח</h2>
+        <p class="checkout-lead">מלאו את הפרטים כדי שנוכל להכין את ההזמנה ולהמשיך לתשלום.</p>
+
+        <form id="customer-form" class="customer-form">
+          <label>
+            <span>שם מלא</span>
+            <input id="customer-name" name="name" type="text" autocomplete="name" required maxlength="80" />
+          </label>
+          <label>
+            <span>טלפון</span>
+            <input id="customer-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" />
+          </label>
+          <label>
+            <span>עיר</span>
+            <input id="customer-city" name="city" type="text" autocomplete="address-level2" required maxlength="60" />
+          </label>
+          <label>
+            <span>כתובת</span>
+            <input id="customer-address" name="address" type="text" autocomplete="street-address" maxlength="120" />
+          </label>
+
+          <fieldset class="delivery-options">
+            <legend>איך תרצו לקבל את ההזמנה?</legend>
+            <label class="delivery-choice"><input type="radio" name="delivery" value="משלוח" checked /> <span>משלוח</span></label>
+            <label class="delivery-choice"><input type="radio" name="delivery" value="איסוף עצמי" /> <span>איסוף עצמי</span></label>
+          </fieldset>
+
+          <label class="full-field">
+            <span>הערות להזמנה</span>
+            <textarea id="customer-notes" name="notes" rows="3" maxlength="300" placeholder="אפשר לכתוב כאן הערה נוספת"></textarea>
+          </label>
+
+          <div class="checkout-order-mini">
+            <span>סה״כ מוצרים</span>
+            <strong id="checkout-total-step1">₪0</strong>
+          </div>
+          <small class="checkout-note">עלות משלוח, אם תהיה, תיקבע לפני חיוב בפועל.</small>
+
+          <button class="btn primary full" type="submit">המשך לתשלום</button>
+        </form>
+      </section>
+
+      <section class="checkout-pane" data-checkout-step="2" hidden>
+        <div class="bit-payment-head">
+          <span class="bit-mark" aria-hidden="true">bit</span>
+          <div>
+            <span class="eyebrow">תשלום</span>
+            <h2>תשלום באמצעות bit</h2>
+          </div>
+        </div>
+
+        <div id="payment-order-summary" class="payment-order-summary"></div>
+
+        <div class="payment-total">
+          <span>סה״כ לתשלום על המוצרים</span>
+          <strong id="checkout-payment-total">₪0</strong>
+        </div>
+
+        <button class="bit-pay-button" id="bit-pay-button" type="button" disabled>
+          תשלום ב־bit
+        </button>
+        <p class="bit-status-note">
+          התשלום עדיין לא פעיל. לאחר חיבור ספק סליקה שתומך ב־bit, הכפתור הזה יעביר לתשלום מאובטח.
+        </p>
+
+        <button class="btn ghost full" id="checkout-back" type="button">חזרה לפרטים</button>
+      </section>
+
+      <section class="checkout-pane checkout-success" data-checkout-step="3" hidden>
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <span class="eyebrow">הזמנה התקבלה</span>
+        <h2>תודה! ההזמנה נקלטה</h2>
+        <p>לאחר חיבור מערכת הסליקה, המסך הזה יוצג רק לאחר אישור תשלום אמיתי.</p>
+        <div id="success-summary" class="payment-order-summary"></div>
+        <button class="btn primary full" id="success-close" type="button">סיום</button>
+      </section>
+    </div>
+  </div>
 
   <nav class="mobile-nav" aria-label="ניווט מהיר">
     <a class="mobile-nav-btn" href="#top"><span class="mobile-nav-icon">⌂</span><span>בית</span></a>
