@@ -13,5 +13,5 @@ const SITE_SETTINGS = {
 
   // לאחר שתקבל כתובת Cloudflare, הדבק אותה כאן.
   // דוגמה: https://my-3d-shop.example.workers.dev
-  siteUrl: "https://YOUR-WORKER.workers.dev"
+  siteUrl: "https://my-3d-print-shop.haimgpt.workers.dev"
 };
