@@ -33,6 +33,17 @@ function defaultColor(id) {
   return p && Array.isArray(p.colors) && p.colors.length ? p.colors[0] : "";
 }
 
+function imageForColor(product, color) {
+  return product?.images?.[color] || product?.image || "";
+}
+
+function updateProductImage(product, color) {
+  const src = imageForColor(product, color);
+  productModalMedia.innerHTML = src
+    ? `<img src="${src}" alt="${product.name} בצבע ${color}" class="product-color-image">`
+    : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
+}
+
 function normalizeCart(raw) {
   if (!Array.isArray(raw)) return [];
   if (raw.length && typeof raw[0] === "string") {
@@ -93,8 +104,9 @@ function renderProducts() {
   products.forEach(p => {
     const card = document.createElement("article");
     card.className = "product-card";
-    const media = p.image
-      ? `<img src="${p.image}" alt="${p.name}" class="product-image">`
+    const cardImage = imageForColor(p, defaultColor(p.id));
+    const media = cardImage
+      ? `<img src="${cardImage}" alt="${p.name}" class="product-image">`
       : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
 
     card.setAttribute("tabindex","0");
@@ -147,6 +159,14 @@ function renderColorOptions(p) {
   productColors.innerHTML = "";
   selectedProductColor = colors[0] || "";
 
+  colors.forEach(color => {
+    const src = imageForColor(p, color);
+    if (src) {
+      const preload = new Image();
+      preload.src = src;
+    }
+  });
+
   colors.forEach((color, index) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -157,6 +177,7 @@ function renderColorOptions(p) {
     button.setAttribute("aria-pressed", index === 0 ? "true" : "false");
     button.addEventListener("click", () => {
       selectedProductColor = color;
+      updateProductImage(p, color);
       productColors.querySelectorAll(".color-choice").forEach(x => {
         const active = x === button;
         x.classList.toggle("active", active);
@@ -178,10 +199,8 @@ function openProductModal(id) {
   productModalAdd.textContent = Number.isFinite(p.priceValue) ? "הוספה לסל" : "יש לעדכן מחיר";
   productQty.value = 1;
   renderColorOptions(p);
+  updateProductImage(p, selectedProductColor);
   updateProductModalPrice();
-  productModalMedia.innerHTML = p.image
-    ? `<img src="${p.image}" alt="${p.name}">`
-    : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
   productModal.classList.add("open");
   productModal.setAttribute("aria-hidden","false");
   document.body.classList.add("no-scroll");

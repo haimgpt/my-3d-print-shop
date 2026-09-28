@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-label="figure בצבע לבן">
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fffdf8"/><stop offset=".55" stop-color="#eceff1"/><stop offset="1" stop-color="#e8dcc2"/></linearGradient>
+  <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#f1d98a"/><stop offset=".45" stop-color="#b98b35"/><stop offset="1" stop-color="#7e5d22"/></linearGradient>
+  <linearGradient id="dark" x1="0" x2="1"><stop stop-color="#35383c"/><stop offset="1" stop-color="#101214"/></linearGradient>
+  <linearGradient id="silver" x1="0" x2="1"><stop stop-color="#f8f9fa"/><stop offset=".45" stop-color="#aeb4ba"/><stop offset="1" stop-color="#6f767d"/></linearGradient>
+  <filter id="shadow"><feDropShadow dx="0" dy="22" stdDeviation="20" flood-opacity=".2"/></filter>
+  <linearGradient id="productColor" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ffffff"/><stop offset=".55" stop-color="#eceff1"/><stop offset="1" stop-color="#cfd3d7"/></linearGradient>
+</defs>
+<rect width="900" height="900" fill="url(#bg)"/>
+<ellipse cx="450" cy="735" rx="265" ry="55" fill="#000" opacity=".09"/>
+<g filter="url(#shadow)">
+<path d="M335 665h230l-24-92c70-78 70-190 18-276-30-50-65-82-109-82s-79 32-109 82c-52 86-52 198 18 276z" fill="url(#productColor)" stroke="#c7a24e" stroke-width="10"/>
+<circle cx="450" cy="240" r="95" fill="url(#productColor)" stroke="#b98b35" stroke-width="10"/>
+<path d="M395 245l38 35 72-78" fill="none" stroke="#2b2d30" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+</g></svg>

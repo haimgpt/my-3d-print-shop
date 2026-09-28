@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-label="decor-star בצבע ורוד">
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fffdf8"/><stop offset=".55" stop-color="#eceff1"/><stop offset="1" stop-color="#e8dcc2"/></linearGradient>
+  <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#f1d98a"/><stop offset=".45" stop-color="#b98b35"/><stop offset="1" stop-color="#7e5d22"/></linearGradient>
+  <linearGradient id="dark" x1="0" x2="1"><stop stop-color="#35383c"/><stop offset="1" stop-color="#101214"/></linearGradient>
+  <linearGradient id="silver" x1="0" x2="1"><stop stop-color="#f8f9fa"/><stop offset=".45" stop-color="#aeb4ba"/><stop offset="1" stop-color="#6f767d"/></linearGradient>
+  <filter id="shadow"><feDropShadow dx="0" dy="22" stdDeviation="20" flood-opacity=".2"/></filter>
+  <linearGradient id="productColor" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f7c0d1"/><stop offset=".55" stop-color="#e78fac"/><stop offset="1" stop-color="#c45f82"/></linearGradient>
+</defs>
+<rect width="900" height="900" fill="url(#bg)"/>
+<ellipse cx="450" cy="735" rx="265" ry="55" fill="#000" opacity=".09"/>
+<g filter="url(#shadow)">
+<path d="M450 150l82 191 208 20-158 136 48 203-180-106-180 106 48-203-158-136 208-20z" fill="url(#productColor)" stroke="#fff" stroke-opacity=".6" stroke-width="10"/>
+<path d="M450 150v444M242 361l340 136M318 497l314-156M270 700l262-359" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="8"/>
+</g></svg>
