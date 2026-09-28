@@ -180,7 +180,7 @@ function renderColorOptions(p) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "color-choice color-" + ({
-      "שחור":"black","לבן":"white","ורוד":"pink","כחול":"blue","ירוק זית":"olive"
+      "שחור":"black","לבן":"white","ורוד":"pink","כחול":"blue","ירוק זית":"olive","ורוד כהה":"pink-dark","שמנת":"cream","זית":"olive"
     }[color] || "default") + (index === 0 ? " active" : "");
     button.innerHTML = `<span class="color-dot" aria-hidden="true"></span><span>${color}</span>`;
     button.setAttribute("aria-pressed", index === 0 ? "true" : "false");
