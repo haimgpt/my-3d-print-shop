@@ -18,9 +18,6 @@ const productQtyMinus = $("#product-qty-minus");
 const productQtyPlus = $("#product-qty-plus");
 const productColors = $("#product-colors");
 const productColorWrap = $("#product-color-wrap");
-const engravingWrap = $("#product-engraving-wrap");
-const engravingInput = $("#product-engraving");
-const aiModal = $("#ai-modal");
 
 let activeProductId = null;
 let selectedProductColor = "";
@@ -44,17 +41,15 @@ function normalizeCart(raw) {
     return Object.entries(counts).map(([id, qty]) => ({
       id,
       qty: Math.min(9, qty),
-      color: defaultColor(id),
-      engraving: ""
+      color: defaultColor(id)
     }));
   }
   return raw
-    .filter(x => x && x.id)
+    .filter(x => x && x.id && productById(x.id))
     .map(x => ({
       id: x.id,
       qty: Math.min(9, Math.max(1, Number(x.qty) || 1)),
-      color: String(x.color || defaultColor(x.id)).slice(0, 30),
-      engraving: String(x.engraving || "").slice(0, 40)
+      color: PRODUCT_COLORS.includes(x.color) ? x.color : defaultColor(x.id)
     }));
 }
 
@@ -155,8 +150,10 @@ function renderColorOptions(p) {
   colors.forEach((color, index) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "color-choice" + (index === 0 ? " active" : "");
-    button.textContent = color;
+    button.className = "color-choice color-" + ({
+      "שחור":"black","לבן":"white","ורוד":"pink","כחול":"blue"
+    }[color] || "default") + (index === 0 ? " active" : "");
+    button.innerHTML = `<span class="color-dot" aria-hidden="true"></span><span>${color}</span>`;
     button.setAttribute("aria-pressed", index === 0 ? "true" : "false");
     button.addEventListener("click", () => {
       selectedProductColor = color;
@@ -181,9 +178,6 @@ function openProductModal(id) {
   productModalAdd.textContent = Number.isFinite(p.priceValue) ? "הוספה לסל" : "יש לעדכן מחיר";
   productQty.value = 1;
   renderColorOptions(p);
-  engravingWrap.hidden = !p.engravable;
-  engravingInput.value = "";
-  engravingInput.maxLength = p.engravingMaxLength || 40;
   updateProductModalPrice();
   productModalMedia.innerHTML = p.image
     ? `<img src="${p.image}" alt="${p.name}">`
@@ -216,31 +210,24 @@ productModal.addEventListener("click", e => {
   if (e.target === productModal) closeProductModal();
 });
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    if (productModal.classList.contains("open")) closeProductModal();
-    if (aiModal.classList.contains("open")) closeUtility(aiModal);
-  }
+  if (e.key === "Escape" && productModal.classList.contains("open")) closeProductModal();
 });
 
 productModalAdd.addEventListener("click", () => {
   if (!activeProductId) return;
-  const p = productById(activeProductId);
   const id = activeProductId;
   const qty = clampQty(productQty.value);
-  const engraving = p?.engravable ? engravingInput.value.trim().slice(0, p.engravingMaxLength || 40) : "";
   const color = selectedProductColor || defaultColor(id);
   closeProductModal();
-  addToCart(id, qty, {color, engraving});
+  addToCart(id, qty, color);
 });
 
-function addToCart(id, qty = 1, options = {}) {
+function addToCart(id, qty = 1, color = defaultColor(id)) {
   const product = productById(id);
   if (!product || !Number.isFinite(product.priceValue)) return;
-  const color = options.color || defaultColor(id);
-  const engraving = String(options.engraving || "").trim().slice(0, product.engravingMaxLength || 40);
-  const existing = cart.find(item => item.id === id && item.color === color && item.engraving === engraving);
+  const existing = cart.find(item => item.id === id && item.color === color);
   if (existing) existing.qty = Math.min(9, existing.qty + qty);
-  else cart.push({id, qty: Math.min(9, qty), color, engraving});
+  else cart.push({id, qty: Math.min(9, qty), color});
   saveCart();
   openCart();
 }
@@ -274,17 +261,13 @@ function renderCart() {
     return;
   }
 
-  items.forEach(({product:p, qty, color, engraving, index}) => {
+  items.forEach(({product:p, qty, color, index}) => {
     const item = document.createElement("div");
     item.className = "cart-item";
-    const optionLines = [
-      color ? `<span class="cart-option">צבע: <strong>${escapeHtml(color)}</strong></span>` : "",
-      engraving ? `<span class="cart-option">חריטה: <strong>“${escapeHtml(engraving)}”</strong></span>` : ""
-    ].join("");
     item.innerHTML = `
       <div class="cart-item-info">
         <strong>${p.name}</strong>
-        ${optionLines}
+        <span class="cart-option">צבע: <strong>${escapeHtml(color)}</strong></span>
         <span class="cart-line-total">${formatPrice(p.priceValue)} × ${qty} = <strong>₪${p.priceValue * qty}</strong></span>
         <div class="cart-qty">
           <button data-dec="${index}" aria-label="הפחת כמות">−</button>
@@ -318,7 +301,6 @@ function renderCart() {
 }
 
 function openCart() {
-  closeUtility(aiModal);
   cartDrawer.classList.add("open");
   cartDrawer.setAttribute("aria-hidden", "false");
   document.body.classList.add("no-scroll");
@@ -328,27 +310,6 @@ function closeCart() {
   cartDrawer.classList.remove("open");
   cartDrawer.setAttribute("aria-hidden", "true");
   document.body.classList.remove("no-scroll");
-}
-
-function openUtility(modal) {
-  if (!modal) return;
-  if (productModal.classList.contains("open")) closeProductModal();
-  if (cartDrawer.classList.contains("open")) closeCart();
-  modal.hidden = false;
-  requestAnimationFrame(() => modal.classList.add("open"));
-  modal.setAttribute("aria-hidden","false");
-  document.body.classList.add("no-scroll");
-}
-function closeUtility(modal) {
-  if (!modal || modal.hidden) return;
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden","true");
-  window.setTimeout(() => {
-    if (!modal.classList.contains("open")) modal.hidden = true;
-  }, 180);
-  if (!productModal.classList.contains("open") && !cartDrawer.classList.contains("open")) {
-    document.body.classList.remove("no-scroll");
-  }
 }
 
 $("#cart-open").addEventListener("click", openCart);
@@ -373,105 +334,17 @@ $("#send-order").addEventListener("click", () => {
   if (!items.length) return;
 
   const totalCost = items.reduce((sum, item) => sum + ((Number(item.product.priceValue) || 0) * item.qty), 0);
-  const list = items.map((item, i) => {
-    const options = [
-      item.color ? `צבע: ${item.color}` : "",
-      item.engraving ? `חריטה: "${item.engraving}"` : ""
-    ].filter(Boolean).join(" | ");
-    return `${i+1}. ${item.product.name} — ₪${item.product.priceValue} × ${item.qty} = ₪${item.product.priceValue * item.qty}${options ? " — " + options : ""}`;
-  }).join("\n");
+  const list = items.map((item, i) =>
+    `${i+1}. ${item.product.name} — ₪${item.product.priceValue} × ${item.qty} = ₪${item.product.priceValue * item.qty} — צבע: ${item.color}`
+  ).join("\n");
 
   window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\n${list}\n\nסה״כ עלות המוצרים: ₪${totalCost}\n\nאשמח להמשך הזמנה.`), "_blank");
 });
-
-function addChatMessage(text, role) {
-  const el = document.createElement("div");
-  el.className = "ai-message " + role;
-  el.textContent = text;
-  $("#ai-chat").appendChild(el);
-  $("#ai-chat").scrollTop = $("#ai-chat").scrollHeight;
-}
-
-function localProductAnswer(question) {
-  const q = question.toLowerCase();
-  const matched = PRODUCTS.find(p => q.includes(p.name.toLowerCase()));
-  if (matched) {
-    const parts = [
-      `${matched.name}: ${matched.description}`,
-      Number.isFinite(matched.priceValue) ? `מחיר: ₪${matched.priceValue}.` : "המחיר עדיין לא הוגדר.",
-      matched.colors?.length ? `צבעים: ${matched.colors.join(", ")}.` : "",
-      matched.engravable ? "ניתן להוסיף חריטה למוצר הזה." : "אין אפשרות חריטה שמוגדרת למוצר הזה."
-    ].filter(Boolean);
-    return parts.join(" ");
-  }
-  if (q.includes("חריט")) {
-    const names = PRODUCTS.filter(p => p.engravable).map(p => p.name);
-    return names.length ? `כרגע אפשרות חריטה מוגדרת עבור: ${names.join(", ")}.` : "כרגע אין מוצר עם אפשרות חריטה מוגדרת.";
-  }
-  if (q.includes("צבע")) {
-    return "אפשר לבחור צבע בתוך חלון כל מוצר. הצבעים הזמינים מוצגים שם לפני ההוספה לסל.";
-  }
-  if (q.includes("מחיר")) {
-    return PRODUCTS.map(p => `${p.name}: ${formatPrice(p.priceValue)}`).join(" | ");
-  }
-  return "אפשר לשאול אותי על מוצר מסוים, מחיר, צבעים או חריטה. אם תרצו תשובה מפורטת יותר, אפשר גם לפנות דרך WhatsApp.";
-}
-
-async function askAi(question) {
-  addChatMessage(question, "user");
-  const send = $("#ai-send");
-  send.disabled = true;
-  send.textContent = "חושב…";
-  try {
-    const catalog = PRODUCTS.map(p => ({
-      name: p.name,
-      category: p.category,
-      description: p.description,
-      price: p.priceValue,
-      colors: p.colors || [],
-      engravable: !!p.engravable
-    }));
-    const response = await fetch("/api/ai", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({question, catalog})
-    });
-    if (!response.ok) throw new Error("AI unavailable");
-    const data = await response.json();
-    addChatMessage(data.answer || localProductAnswer(question), "assistant");
-  } catch {
-    addChatMessage(localProductAnswer(question), "assistant");
-  } finally {
-    send.disabled = false;
-    send.textContent = "שליחה";
-  }
-}
-
-$("#ai-form").addEventListener("submit", e => {
-  e.preventDefault();
-  const input = $("#ai-question");
-  const question = input.value.trim();
-  if (!question) return;
-  input.value = "";
-  askAi(question.slice(0,500));
-});
-
-const aiOpenButton = $("#ai-open");
-if (aiOpenButton) {
-  aiOpenButton.addEventListener("click", () => {
-    openUtility(aiModal);
-    setQuickNavActive(aiOpenButton);
-    setTimeout(() => $("#ai-question")?.focus(), 220);
-  });
-}
-$("#ai-close").addEventListener("click", () => closeUtility(aiModal));
-aiModal.addEventListener("click", e => { if (e.target === aiModal) closeUtility(aiModal); });
 
 document.querySelectorAll(".mobile-nav a").forEach(link => {
   link.addEventListener("click", () => {
     if (productModal.classList.contains("open")) closeProductModal();
     if (cartDrawer.classList.contains("open")) closeCart();
-    closeUtility(aiModal);
     setQuickNavActive(link);
   });
 });
