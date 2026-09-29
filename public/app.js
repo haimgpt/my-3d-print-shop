@@ -586,6 +586,15 @@ function setQuickNavActive(target) {
 const productsQuick = document.querySelector('.mobile-nav a[href="#products"]');
 if (productsQuick) setQuickNavActive(productsQuick);
 
+document.querySelectorAll(".faq-item").forEach(item => {
+  item.addEventListener("toggle", () => {
+    if (!item.open) return;
+    document.querySelectorAll(".faq-item").forEach(other => {
+      if (other !== item) other.open = false;
+    });
+  });
+});
+
 initRealHeroProducts();
 renderProducts();
 renderCart();
