@@ -353,10 +353,12 @@ function renderCart() {
   items.forEach(({product:p, qty, color, index}) => {
     const item = document.createElement("div");
     item.className = "cart-item";
+    const cartImage = imageForColor(p, color);
     item.innerHTML = `
+      ${cartImage ? `<img class="cart-item-thumb" src="${cartImage}" alt="${escapeHtml(p.name)} בצבע ${escapeHtml(color)}">` : ""}
       <div class="cart-item-info">
         <strong>${p.name}</strong>
-        <span class="cart-option">צבע: <strong>${escapeHtml(color)}</strong></span>
+        <span class="cart-option">צבע שנבחר: <strong>${escapeHtml(color)}</strong></span>
         <span class="cart-line-total">${formatPrice(p.priceValue)} × ${qty} = <strong>₪${p.priceValue * qty}</strong></span>
         <div class="cart-qty">
           <button data-dec="${index}" aria-label="הפחת כמות">−</button>
