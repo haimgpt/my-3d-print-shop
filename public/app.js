@@ -277,6 +277,20 @@ function cartTotalValue() {
   return cartSnapshot().reduce((sum, item) => sum + ((Number(item.product.priceValue) || 0) * item.qty), 0);
 }
 
+const DELIVERY_FEE = 30;
+
+function selectedDeliveryMethod() {
+  return document.querySelector('input[name="delivery"]:checked')?.value || "משלוח";
+}
+
+function deliveryFeeValue() {
+  return selectedDeliveryMethod() === "משלוח" ? DELIVERY_FEE : 0;
+}
+
+function checkoutGrandTotal() {
+  return cartTotalValue() + deliveryFeeValue();
+}
+
 function setCheckoutStep(step) {
   document.querySelectorAll("[data-checkout-step]").forEach(pane => {
     const active = Number(pane.dataset.checkoutStep) === step;
@@ -290,18 +304,33 @@ function setCheckoutStep(step) {
 
 function renderPaymentSummary() {
   const items = cartSnapshot();
+  const shipping = deliveryFeeValue();
   paymentOrderSummary.innerHTML = items.map(item => `
     <div class="payment-summary-line">
       <div>
         <strong>${escapeHtml(item.product.name)}</strong>
-        <span>${escapeHtml(item.color)} · כמות ${item.qty}</span>
+        ${item.color ? `<span>${escapeHtml(item.color)} · כמות ${item.qty}</span>` : `<span>כמות ${item.qty}</span>`}
       </div>
       <b>₪${item.product.priceValue * item.qty}</b>
     </div>
-  `).join("");
-  const total = cartTotalValue();
-  checkoutTotalStep1.textContent = "₪" + total;
-  checkoutPaymentTotal.textContent = "₪" + total;
+  `).join("") + `
+    <div class="payment-summary-line">
+      <div>
+        <strong>משלוח</strong>
+        <span>${selectedDeliveryMethod() === "משלוח" ? "משלוח לכתובת" : "איסוף עצמי"}</span>
+      </div>
+      <b>₪${shipping}</b>
+    </div>
+  `;
+
+  const productsTotal = cartTotalValue();
+  const grandTotal = checkoutGrandTotal();
+  checkoutTotalStep1.textContent = "₪" + productsTotal;
+  const shippingStep1 = $("#checkout-shipping-step1");
+  const grandTotalStep1 = $("#checkout-grand-total-step1");
+  if (shippingStep1) shippingStep1.textContent = "₪" + shipping;
+  if (grandTotalStep1) grandTotalStep1.textContent = "₪" + grandTotal;
+  checkoutPaymentTotal.textContent = "₪" + grandTotal;
 }
 
 function openCheckout() {
@@ -434,6 +463,10 @@ $("#whatsapp-order").addEventListener("click", () => {
   ).join("\n");
 
   window.open(waLink(`שלום, אני רוצה להזמין את המוצרים הבאים:\n${list}\n\nסה״כ עלות המוצרים: ₪${totalCost}\n\nאשמח להמשך הזמנה.`), "_blank");
+});
+
+document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+  radio.addEventListener("change", renderPaymentSummary);
 });
 
 customerForm?.addEventListener("submit", e => {
