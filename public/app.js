@@ -23,6 +23,7 @@ const customerForm = $("#customer-form");
 const checkoutPaymentTotal = $("#checkout-payment-total");
 const checkoutTotalStep1 = $("#checkout-total-step1");
 const paymentOrderSummary = $("#payment-order-summary");
+const successSummary = $("#success-summary");
 let checkoutCustomer = null;
 
 let activeProductId = null;
@@ -333,6 +334,43 @@ function renderPaymentSummary() {
   checkoutPaymentTotal.textContent = "₪" + grandTotal;
 }
 
+function renderSuccessSummary() {
+  const items = cartSnapshot();
+  const shipping = deliveryFeeValue();
+  const grandTotal = checkoutGrandTotal();
+  const customer = checkoutCustomer || {};
+
+  successSummary.innerHTML = `
+    <div class="payment-summary-line">
+      <div>
+        <strong>פרטי לקוח</strong>
+        <span>${escapeHtml(customer.name || "")} · ${escapeHtml(customer.phone || "")}</span>
+        <span>${escapeHtml(customer.city || "")}${customer.address ? " · " + escapeHtml(customer.address) : ""}</span>
+      </div>
+    </div>
+    ${items.map(item => `
+      <div class="payment-summary-line">
+        <div>
+          <strong>${escapeHtml(item.product.name)}</strong>
+          <span>${item.color ? escapeHtml(item.color) + " · " : ""}כמות ${item.qty}</span>
+        </div>
+        <b>₪${item.product.priceValue * item.qty}</b>
+      </div>
+    `).join("")}
+    <div class="payment-summary-line">
+      <div>
+        <strong>${selectedDeliveryMethod() === "משלוח" ? "משלוח" : "איסוף עצמי"}</strong>
+        <span>${selectedDeliveryMethod() === "משלוח" ? "דמי משלוח" : "ללא דמי משלוח"}</span>
+      </div>
+      <b>₪${shipping}</b>
+    </div>
+    <div class="payment-summary-line">
+      <div><strong>סה״כ להזמנה</strong></div>
+      <b>₪${grandTotal}</b>
+    </div>
+  `;
+}
+
 function openCheckout() {
   if (!cartSnapshot().length) return;
   closeCart();
@@ -486,6 +524,11 @@ customerForm?.addEventListener("submit", e => {
   localStorage.setItem("checkout-customer", JSON.stringify(checkoutCustomer));
   renderPaymentSummary();
   setCheckoutStep(2);
+});
+
+$("#checkout-confirm-order")?.addEventListener("click", () => {
+  renderSuccessSummary();
+  setCheckoutStep(3);
 });
 
 $("#checkout-back")?.addEventListener("click", () => setCheckoutStep(1));
