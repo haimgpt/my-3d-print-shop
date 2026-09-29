@@ -1442,3 +1442,9 @@ body{
   .cart-item{grid-template-columns:64px minmax(0,1fr) auto!important;gap:9px!important}
   .cart-item-thumb{width:64px!important;height:64px!important}
 }
+
+.color-yellow .color-dot{background:#f4d51f;border-color:#c7aa11}
+.color-rainbow .color-dot{
+  background:conic-gradient(#e75d5d,#efb33f,#e5dc45,#58a966,#4e86c9,#8d63c4,#d65d9b,#e75d5d);
+  border-color:#8a7a6a
+}
