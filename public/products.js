@@ -124,7 +124,7 @@ const PRODUCTS = [
     colors: ["שחור", "לבן", "ורוד כהה", "שמנת", "זית"],
     image: "images/ribbed-planter-black.jpg",
     images: {"שחור":"images/ribbed-planter-black.jpg","לבן":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/69a658c6-54ea-4b8e-b639-341bdf02dbae.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiN2I3OTY2MTgwNTI1MTAxNiIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDgzOTk2MH0.Xx72JpYdB3JdtdHdTyoNwMO44BIbtJiJ7cRmzjMttyQ","ורוד כהה":"images/ribbed-planter-pink-dark.jpg","שמנת":"images/ribbed-planter-cream.jpg","זית":"images/ribbed-planter-olive.jpg"}
-  }
+  },
   {
     id: "spiral-cone",
     name: "קונוס ספירלה",
