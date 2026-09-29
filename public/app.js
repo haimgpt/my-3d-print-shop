@@ -83,16 +83,6 @@ function waLink(message) {
   return `https://wa.me/${SITE_SETTINGS.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
-const categories = ["הכל", ...new Set(PRODUCTS.map(p => p.category))];
-categories.forEach(cat => {
-  const b = document.createElement("button");
-  b.className = "chip";
-  b.textContent = cat;
-  b.dataset.cat = cat;
-  b.addEventListener("click", () => {
-    selectedCategory = cat;
-    document.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x.dataset.cat === cat));
-    
 function initRealHeroProducts() {
   document.querySelectorAll("[data-hero-image]").forEach(img => {
     const product = productById(img.dataset.heroImage);
@@ -103,7 +93,8 @@ function initRealHeroProducts() {
       "spiral-cone":"לבן",
       "cool-desk-animal":""
     }[product.id] || defaultColor(product.id);
-    img.src = imageForColor(product, preferredColor);
+    const src = imageForColor(product, preferredColor);
+    if (src) img.src = src;
   });
 
   document.querySelectorAll("[data-hero-product]").forEach(button => {
@@ -111,7 +102,16 @@ function initRealHeroProducts() {
   });
 }
 
-renderProducts();
+const categories = ["הכל", ...new Set(PRODUCTS.map(p => p.category))];
+categories.forEach(cat => {
+  const b = document.createElement("button");
+  b.className = "chip";
+  b.textContent = cat;
+  b.dataset.cat = cat;
+  b.addEventListener("click", () => {
+    selectedCategory = cat;
+    document.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x.dataset.cat === cat));
+    renderProducts();
   });
   categoriesEl.appendChild(b);
 });
