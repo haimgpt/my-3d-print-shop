@@ -92,7 +92,26 @@ categories.forEach(cat => {
   b.addEventListener("click", () => {
     selectedCategory = cat;
     document.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x.dataset.cat === cat));
-    renderProducts();
+    
+function initRealHeroProducts() {
+  document.querySelectorAll("[data-hero-image]").forEach(img => {
+    const product = productById(img.dataset.heroImage);
+    if (!product) return;
+    const preferredColor = {
+      "home-tray-set":"שמנת",
+      "ribbed-planter":"לבן",
+      "spiral-cone":"לבן",
+      "cool-desk-animal":""
+    }[product.id] || defaultColor(product.id);
+    img.src = imageForColor(product, preferredColor);
+  });
+
+  document.querySelectorAll("[data-hero-product]").forEach(button => {
+    button.addEventListener("click", () => openProductModal(button.dataset.heroProduct));
+  });
+}
+
+renderProducts();
   });
   categoriesEl.appendChild(b);
 });
@@ -301,6 +320,8 @@ function setCheckoutStep(step) {
   document.querySelectorAll("[data-step-indicator]").forEach(indicator => {
     indicator.classList.toggle("active", Number(indicator.dataset.stepIndicator) <= step);
   });
+  checkoutModal?.classList.toggle("payment-mode", step === 2);
+  checkoutModal?.classList.toggle("success-mode", step === 3);
 }
 
 function renderPaymentSummary() {
@@ -565,5 +586,6 @@ function setQuickNavActive(target) {
 const productsQuick = document.querySelector('.mobile-nav a[href="#products"]');
 if (productsQuick) setQuickNavActive(productsQuick);
 
+initRealHeroProducts();
 renderProducts();
 renderCart();
