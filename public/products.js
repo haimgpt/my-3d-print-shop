@@ -113,7 +113,7 @@ const PRODUCTS = [
     priceValue: 110,
     colors: ["שחור", "לבן", "ורוד כהה", "שמנת", "זית"],
     image: "images/home-tray-set-black.jpg",
-    images: {"שחור":"images/home-tray-set-black.jpg","לבן":"images/home-tray-set-white.jpg","ורוד כהה":"images/home-tray-set-pink-dark.jpg","שמנת":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/7d9966c9-5237-4e70-a9f1-4792b885f312.jpg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiZTA2MWI2ODFmOTQwZGRkYyIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDc3ODQ5N30.3WVPtHn36MqqIpjqYxXDo28c3EsX-fY6bH67WXWM9oU","זית":"images/home-tray-set-olive.jpg"}
+    images: {"שחור":"images/home-tray-set-black.jpg","לבן":"images/home-tray-set-white.jpg","ורוד כהה":"images/home-tray-set-pink-dark.jpg","שמנת":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/d93303e8-0271-4cb5-b7cc-c471c7313450.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNzc1M2E5YTAzNmZjNGZjNyIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDgxMDAxNn0.pgbX9aIosDuscrH7fdkC3J2xB7JK7YQyiJFVwEHDIjo","זית":"images/home-tray-set-olive.jpg"}
   },
   {
     id: "ribbed-planter",
