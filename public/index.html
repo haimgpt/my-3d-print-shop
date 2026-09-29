@@ -10,7 +10,7 @@
   <meta name="description" content="מוצרי תלת־ממד מוכנים לבחירה והזמנה." />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#f7f7f5" />
-  <link rel="stylesheet" href="style.css?v=shipping30-20260929-2" />
+  <link rel="stylesheet" href="style.css?v=order-confirm-20260929-1" />
 </head>
 <body>
   <a class="skip-link" href="#products">דלג למוצרים</a>
@@ -236,17 +236,18 @@
           תשלום ב־bit
         </button>
         <p class="bit-status-note">
-          התשלום עדיין לא פעיל. לאחר חיבור ספק סליקה שתומך ב־bit, הכפתור הזה יעביר לתשלום מאובטח.
+          התשלום ב־bit עדיין לא פעיל. אפשר לאשר את פרטי ההזמנה עכשיו, וניצור איתכם קשר להשלמת התשלום ולאישור ההזמנה.
         </p>
 
+        <button class="btn primary full" id="checkout-confirm-order" type="button">אישור הזמנה</button>
         <button class="btn ghost full" id="checkout-back" type="button">חזרה לפרטים</button>
       </section>
 
       <section class="checkout-pane checkout-success" data-checkout-step="3" hidden>
         <div class="success-icon" aria-hidden="true">✓</div>
-        <span class="eyebrow">הזמנה התקבלה</span>
-        <h2>תודה! ההזמנה נקלטה</h2>
-        <p>לאחר חיבור מערכת הסליקה, המסך הזה יוצג רק לאחר אישור תשלום אמיתי.</p>
+        <span class="eyebrow">אישור הזמנה</span>
+        <h2>פרטי ההזמנה נשמרו</h2>
+        <p>ניצור איתכם קשר להשלמת התשלום ולאישור ההזמנה. התשלום ב־bit עדיין לא בוצע.</p>
         <div id="success-summary" class="payment-order-summary"></div>
         <button class="btn primary full" id="success-close" type="button">סיום</button>
       </section>
@@ -267,7 +268,7 @@
   </footer>
 
   <script src="settings.js"></script>
-  <script src="products.js?v=shipping30-20260929-2"></script>
-  <script src="app.js?v=shipping30-20260929-2"></script>
+  <script src="products.js?v=order-confirm-20260929-1"></script>
+  <script src="app.js?v=order-confirm-20260929-1"></script>
 </body>
 </html>
