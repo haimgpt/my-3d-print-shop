@@ -125,4 +125,19 @@ const PRODUCTS = [
     image: "images/ribbed-planter-black.jpg",
     images: {"שחור":"images/ribbed-planter-black.jpg","לבן":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/69a658c6-54ea-4b8e-b639-341bdf02dbae.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiN2I3OTY2MTgwNTI1MTAxNiIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDgzOTk2MH0.Xx72JpYdB3JdtdHdTyoNwMO44BIbtJiJ7cRmzjMttyQ","ורוד כהה":"images/ribbed-planter-pink-dark.jpg","שמנת":"images/ribbed-planter-cream.jpg","זית":"images/ribbed-planter-olive.jpg"}
   }
+  {
+    id: "spiral-cone",
+    name: "קונוס ספירלה",
+    category: "דקורציה",
+    description: "קונוס ספירלה מודפס בתלת־ממד בעיצוב דקורטיבי.",
+    priceValue: 15,
+    colors: ["לבן", "שחור", "צהוב", "קשת"],
+    image: "https://d2jqrm6oza8nb6.cloudfront.net/datasets/f1e588bb-aec5-4f7b-9a9c-1bc4981e2e9a.jpeg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiYzdjNjNjYTc0MmE0NWM0NyIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDg0MTYzOX0.6LFayrRWdE_PZcSyegkfwl34zSlH24pGgnIUt2ipaBw",
+    images: {
+      "לבן":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/f1e588bb-aec5-4f7b-9a9c-1bc4981e2e9a.jpeg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiYzdjNjNjYTc0MmE0NWM0NyIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDg0MTYzOX0.6LFayrRWdE_PZcSyegkfwl34zSlH24pGgnIUt2ipaBw",
+      "שחור":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/82fb3694-1fc9-48a5-a8ce-e06b71b72a35.jpeg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNTgzOWIwZDYxYmQxMTlmYyIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDc4MzgzMH0.y3bmTwRJQKfZCQ0AAdfVRUmVAkeIYNWiI6iashvGc1s",
+      "צהוב":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/f08b3357-b63b-44a4-a52e-f179d3fad971.jpeg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiODJlNWM2YmNmOTQ0MzMzYSIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDc5NDMwMH0.EI2ahDbdC21nRgAnH8lHvPXd1rQJ-oeYs13dvA2maAU",
+      "קשת":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/f40f2a3c-3647-49f0-a14e-1fcdb9203d71.jpeg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiODNjZGNjNjk4N2Q4OGUzOSIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDc5MzcwNX0.kZc3-TjWXcNX_J0uBZdB1x4C_2kERpNHD6CmJcFJUb8"
+    }
+  },
 ];
