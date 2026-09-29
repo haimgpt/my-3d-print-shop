@@ -140,4 +140,14 @@ const PRODUCTS = [
       "קשת":"https://d2jqrm6oza8nb6.cloudfront.net/datasets/f40f2a3c-3647-49f0-a14e-1fcdb9203d71.jpeg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiODNjZGNjNjk4N2Q4OGUzOSIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDc5MzcwNX0.kZc3-TjWXcNX_J0uBZdB1x4C_2kERpNHD6CmJcFJUb8"
     }
   },
+  {
+    id: "cool-desk-animal",
+    name: "חיית שולחן מגניבה",
+    category: "דקורציה",
+    description: "חיית שולחן דקורטיבית מודפסת בתלת־ממד.",
+    priceValue: 45,
+    colors: [],
+    image: "https://d2jqrm6oza8nb6.cloudfront.net/datasets/a6ad8d75-bfe8-471e-82af-dfcd87d35dbf.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMzRjMWM5OGNlMzBiZjcwNSIsImJ1Y2tldCI6InJ1bndheS1kYXRhc2V0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDg0NjQ3Nn0.3wGyXvXsp9EDaIqPddWGVjBKdIXYDZFoD58MI26GWVA",
+    images: {}
+  },
 ];
