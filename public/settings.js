@@ -8,7 +8,7 @@ const SITE_SETTINGS = {
 
   // מספר WhatsApp בפורמט בינלאומי, ללא + וללא מקפים.
   // דוגמה לישראל: 972501234567
-  whatsappNumber: "972503939881",
+  whatsappNumber: "972525989098",
 
   // לאחר שתקבל כתובת Cloudflare, הדבק אותה כאן.
   // דוגמה: https://my-3d-shop.example.workers.dev
