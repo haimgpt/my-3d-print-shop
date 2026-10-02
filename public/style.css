@@ -1660,3 +1660,55 @@ body{
   .payment-page-hero{padding:22px 8px 18px}
   .payment-contact-card{padding:24px 15px}
 }
+
+
+/* ===== Broken image fallback ===== */
+.product-image-fallback{
+  width:100%;
+  aspect-ratio:4/3;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:8px;
+  padding:18px;
+  text-align:center;
+  background:
+    radial-gradient(circle at 70% 18%,rgba(217,181,89,.34),transparent 30%),
+    linear-gradient(145deg,#f5f0e5,#ded2b8);
+  color:#29241c;
+}
+.product-image-fallback span{
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:#1b1b1d;
+  color:#dfbc62;
+  font-weight:900;
+  letter-spacing:.06em;
+  box-shadow:0 12px 28px rgba(0,0,0,.16);
+}
+.product-image-fallback strong{
+  max-width:90%;
+  font-size:.92rem;
+}
+.hero-product-fallback{
+  aspect-ratio:1/1;
+  min-height:120px;
+}
+.product-modal-fallback{
+  min-height:320px;
+  aspect-ratio:auto;
+  border-radius:20px;
+}
+.cart-item .product-image-fallback{
+  width:72px;
+  height:72px;
+  min-width:72px;
+  aspect-ratio:1/1;
+  padding:6px;
+  border-radius:15px;
+}
+.cart-item .product-image-fallback span{width:34px;height:34px;border-radius:10px;font-size:.72rem}
+.cart-item .product-image-fallback strong{display:none}
