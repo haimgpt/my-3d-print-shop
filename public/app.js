@@ -44,11 +44,33 @@ function imageForColor(product, color) {
   return product?.images?.[color] || product?.image || "";
 }
 
+function installProductImageFallback(img, product) {
+  if (!img || !product) return;
+  img.addEventListener("error", () => {
+    const fallback = product.image || "";
+    const current = img.getAttribute("src") || "";
+    if (fallback && current !== fallback) {
+      img.setAttribute("src", fallback);
+      return;
+    }
+
+    const placeholder = document.createElement("div");
+    placeholder.className = img.classList.contains("product-color-image")
+      ? "product-image-fallback product-modal-fallback"
+      : img.closest(".hero-real-card")
+        ? "product-image-fallback hero-product-fallback"
+        : "product-image-fallback";
+    placeholder.innerHTML = `<span>3D</span><strong>${escapeHtml(product.name)}</strong>`;
+    img.replaceWith(placeholder);
+  });
+}
+
 function updateProductImage(product, color) {
   const src = imageForColor(product, color);
   productModalMedia.innerHTML = src
-    ? `<img src="${src}" alt="${product.name} בצבע ${color}" class="product-color-image">`
-    : `<div class="product-placeholder" aria-hidden="true"><span>3D</span></div>`;
+    ? `<img src="${src}" alt="${product.name}${color ? " בצבע " + color : ""}" class="product-color-image">`
+    : `<div class="product-image-fallback product-modal-fallback"><span>3D</span><strong>${escapeHtml(product.name)}</strong></div>`;
+  installProductImageFallback(productModalMedia.querySelector("img"), product);
 }
 
 function normalizeCart(raw) {
@@ -94,6 +116,7 @@ function initRealHeroProducts() {
       "cool-desk-animal":""
     }[product.id] || defaultColor(product.id);
     const src = imageForColor(product, preferredColor);
+    installProductImageFallback(img, product);
     if (src) img.src = src;
   });
 
@@ -152,6 +175,7 @@ function renderProducts() {
           <span class="card-action" aria-hidden="true">לפרטים</span>
         </div>
       </div>`;
+    installProductImageFallback(card.querySelector("img.product-image"), p);
     card.addEventListener("click", () => openProductModal(p.id));
     card.addEventListener("keydown", e => {
       if (e.key === "Enter" || e.key === " ") {
@@ -455,6 +479,7 @@ function renderCart() {
         </div>
       </div>
       <button class="remove-item" aria-label="הסר ${p.name}" data-remove="${index}">✕</button>`;
+    installProductImageFallback(item.querySelector("img.cart-item-thumb"), p);
     cartItems.appendChild(item);
   });
 
