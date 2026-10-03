@@ -46,5 +46,15 @@ const PRODUCTS = [
     colors: [],
     image: "images/cool-desk-animal.jpg",
     images: {}
+  },
+  {
+    id: "boys-surprise-egg",
+    name: "ביצת הפתעה לבנים",
+    category: "ילדים",
+    description: "ביצת הפתעה מודפסת בתלת־ממד לילדים, קטנה, מגניבה וכיפית לפתיחה ולמשחק.",
+    priceValue: 20,
+    colors: [],
+    image: "",
+    images: {}
   }
 ];
